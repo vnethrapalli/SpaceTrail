@@ -3,10 +3,10 @@ import java.awt.*;
 
 public class Node {
 
-    private String question;
+    private String text;
 
-    public Node(String question) {
-        this.question = question;
+    public Node(String text) {
+        this.text = text;
     }
 
     private class NodePanel extends JPanel {
