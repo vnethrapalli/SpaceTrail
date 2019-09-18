@@ -1,0 +1,6 @@
+Start question
+3
+answer1 child1.txt
+answer2 child2.txt
+answer3 child3.txt
+
