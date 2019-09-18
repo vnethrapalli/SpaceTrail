@@ -27,6 +27,7 @@ public class Node {
 
     }
     private void loadfile(String file) throws FileNotFoundException {
+        //https://www.mkyong.com/java/how-to-read-file-from-java-bufferedreader-example/
         BufferedReader in = new BufferedReader(new FileReader(file));
     }
     private class NodePanel extends JPanel {
