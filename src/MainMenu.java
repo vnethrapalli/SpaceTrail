@@ -11,8 +11,6 @@ public class MainMenu extends JPanel {
     private FontMetrics f_title;
 
     private int mouse_x, mouse_y;
-    int w = (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth(),
-            h = (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 
     public MainMenu() {
         Font customFont=null;
@@ -20,7 +18,7 @@ public class MainMenu extends JPanel {
             //create the font to use. Specify the size!
             //https://www.dafontfree.net/freefonts-matura-mt-script-capitals-f65093.htm
             //https://stackoverflow.com/questions/5652344/how-can-i-use-a-custom-font-in-java
-            customFont = Font.createFont(Font.TRUETYPE_FONT, new File("MATURASC.ttf")).deriveFont(Font.BOLD,h/10);
+            customFont = Font.createFont(Font.TRUETYPE_FONT, new File("MATURASC.ttf")).deriveFont(Font.BOLD,(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/10);
         } catch (IOException e) {
             e.printStackTrace();
         } catch(FontFormatException e) {
