@@ -29,7 +29,7 @@ public class Runner {
     public static void save(Node curnode){
         //https://www.javatpoint.com/java-filewriter-class
         try{
-            FileWriter fw=new FileWriter("C:\\Users\\NerdMachine2\\IdeaProjects\\SpaaceTrail\\savefile");
+            FileWriter fw=new FileWriter("savefile");
             fw.write(curnode.FILE);
             fw.close();
         }catch(Exception e){System.out.println(e);}
