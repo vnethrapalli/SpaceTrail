@@ -25,6 +25,7 @@ public class MainMenu extends JPanel {
             e.printStackTrace();
         } catch(FontFormatException e) {
             e.printStackTrace();
+
         }
         //create the font
 
