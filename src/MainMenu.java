@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
 
 public class MainMenu extends JPanel {
 
@@ -13,7 +15,21 @@ public class MainMenu extends JPanel {
             h = (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 
     public MainMenu() {
-        title = new Font("Matura MT Script Capitals", Font.BOLD,h / 10);
+        try {
+            //create the font to use. Specify the size!
+            //Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("MATURASC.ttf")).deriveFont(12f);
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            //register the font
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("MATURASC.ttf")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch(FontFormatException e) {
+            e.printStackTrace();
+        }
+        //create the font
+
+        //title = new Font("Matura MT Script Capitals", Font.BOLD,h / 10);
+        title = new Font("MATURASC", Font.BOLD,h / 10);
         f_title =  getFontMetrics(title);
 
         addMouseMotionListener(new MouseAdapter() {
