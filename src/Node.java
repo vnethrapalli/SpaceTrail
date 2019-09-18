@@ -27,6 +27,7 @@ public class Node {
         branch.add(new NodePanel());
 
     }
+
     private void loadfile(String file) throws IOException {
         //https://www.mkyong.com/java/how-to-read-file-from-java-bufferedreader-example/
         BufferedReader in = new BufferedReader(new FileReader(file));
@@ -43,6 +44,7 @@ public class Node {
         }
 
     }
+
     private class NodePanel extends JPanel {
 
         protected void paintComponent(Graphics g) {
