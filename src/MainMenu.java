@@ -15,12 +15,10 @@ public class MainMenu extends JPanel {
             h = (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 
     public MainMenu() {
+        Font customFont=null;
         try {
             //create the font to use. Specify the size!
-            //Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("MATURASC.ttf")).deriveFont(12f);
-            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            //register the font
-            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("MATURASC.ttf")));
+            customFont = Font.createFont(Font.TRUETYPE_FONT, new File("MATURASC.ttf")).deriveFont(Font.BOLD,h/10);
         } catch (IOException e) {
             e.printStackTrace();
         } catch(FontFormatException e) {
@@ -29,7 +27,8 @@ public class MainMenu extends JPanel {
         //create the font
 
         //title = new Font("Matura MT Script Capitals", Font.BOLD,h / 10);
-        title = new Font("MATURASC", Font.BOLD,h / 10);
+
+        title = customFont;
         f_title =  getFontMetrics(title);
 
         addMouseMotionListener(new MouseAdapter() {
