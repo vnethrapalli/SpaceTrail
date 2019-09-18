@@ -18,6 +18,8 @@ public class MainMenu extends JPanel {
         Font customFont=null;
         try {
             //create the font to use. Specify the size!
+            //https://www.dafontfree.net/freefonts-matura-mt-script-capitals-f65093.htm
+            //https://stackoverflow.com/questions/5652344/how-can-i-use-a-custom-font-in-java
             customFont = Font.createFont(Font.TRUETYPE_FONT, new File("MATURASC.ttf")).deriveFont(Font.BOLD,h/10);
         } catch (IOException e) {
             e.printStackTrace();
