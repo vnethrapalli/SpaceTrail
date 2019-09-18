@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class MainMenu extends JPanel {
 
@@ -8,8 +10,20 @@ public class MainMenu extends JPanel {
 
     private FontMetrics f_title = getFontMetrics(title);
 
+    private int mouse_x, mouse_y;
+
     public MainMenu() {
-        JButton start = new JButton("Start Adventure!");
+        addMouseMotionListener(new MouseAdapter() {
+            @Override
+            public void mouseMoved(MouseEvent e) {
+
+                mouse_x = e.getX();
+                mouse_y = e.getY();
+
+            }
+
+        });
+
     }
 
     protected void paintComponent(Graphics g) {
