@@ -1,0 +1,4 @@
+Intro text Intro text blah blah blah. Your plaent has been destroyed by warring nations, you are an orphan and are being hunted down. You have to leave but before that, will you visit the shop?
+2
+Yes I'll buy supplies_shop_adven.txt_adven.txt
+No, I don't want shop_null_adven.txt_adven.txt
