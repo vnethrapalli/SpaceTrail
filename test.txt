@@ -1,6 +1,6 @@
 Start question
 3
-answer1 type1 child1.txt child12.txt
-answer2 type2 child2.txt child22.txt
-answer3 type3 child3.txt child32.txt
+answer1_type1_child1.txt_child12.txt
+answer2_type2_child2.txt_child22.txt
+answer3_type3_child3.txt_child32.txt
 
