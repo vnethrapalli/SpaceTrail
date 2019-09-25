@@ -1,3 +1,4 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
         import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -10,6 +11,8 @@ public class Shop extends JPanel {
     private int mouse_x, mouse_y;
     private Font title;
     private FontMetrics f_title;
+    private Image triangle;
+
     public Shop() {
 
         addMouseMotionListener(new MouseAdapter() {
@@ -37,7 +40,12 @@ public class Shop extends JPanel {
 
         }
         title = customFont;
-
+        try {
+            //triangle image
+            triangle = ImageIO.read(new File("Green_triangle.png"));
+        }catch (IOException e){
+            System.out.println("no");
+        }
 
     }
     protected void paintComponent(Graphics g) {
@@ -45,9 +53,11 @@ public class Shop extends JPanel {
         g.fillRect(0, 0, getWidth(), getHeight());
         g.setColor(new Color(230,94,9));
         //buttons x difference is 1/10
+        //https://commons.wikimedia.org/wiki/File:Green_triangle.svg
         g.fillRect(  getWidth() / 6, getHeight() / 4, getWidth() / 12, getHeight() / 20);
         g.fillRect(  2*getWidth() / 3, getHeight() / 4, getWidth() / 12, getHeight() / 20);
         g.fillRect(  5*getWidth() / 6, getHeight() / 4, getWidth() / 12, getHeight() / 20);
+
 
         g.fillRect(  getWidth() / 6, 7*getHeight() / 20, getWidth() / 12, getHeight() / 20);
         g.fillRect(  2*getWidth() / 3, 7*getHeight() / 20, getWidth() / 12, getHeight() / 20);
