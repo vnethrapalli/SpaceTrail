@@ -1,17 +1,92 @@
 package Minigames;
 
 import java.util.ArrayList;
+import java.util.Random;
 
-import static java.lang.Math.abs;
-import static java.lang.Math.addExact;
-
+import static java.lang.Math.*;
 public class MicroWars {
     private ArrayList<soldier> troops;
     private Planet[] planets;
-    public MicroWars(String FILE){
+    private int speed;
+    public MicroWars(int numplanets,int maxwidth,int maxheight,int maxsize,int teams,int speed){
+        this.speed=speed;
+        Random rand = new Random();
+        planets=new Planet[numplanets];
+        for (int i = 0; i < numplanets-teams ; i++) {
+            boolean thing=true;
+            int x=0;
+            int y=0;
+            do {
+                thing=true;
+                x = rand.nextInt(maxwidth);
+                y = rand.nextInt(maxheight);
+                for(int j=0;j<planets.length;j++){
+                    if(planets[j]!=null&&(planets[j].x==x&&planets[j].y==y)){
+                        thing=false;
+                    }
+                }
+            }while (!thing);
+            planets[i]=new Planet(x,y,-1,rand.nextInt(maxsize));
+        }
+        for (int i = 0; i < teams; i++) {
+            boolean thing=true;
+            int x=0;
+            int y=0;
+            do {
+                thing=true;
+                x = rand.nextInt(maxwidth);
+                y = rand.nextInt(maxheight);
+                for(int j=0;j<planets.length;j++){
+                    if(planets[j]!=null&&(planets[j].x==x&&planets[j].y==y)){
+                        thing=false;
+                    }
+                }
+            }while (!thing);
+            planets[i]=new Planet(x,y,i,rand.nextInt(maxsize));
+        }
+        play();
+    }
+    public void play(){
+        while(done()==-1){
+            try {
+                Thread.sleep(10);
+            }catch (Exception e){
+                System.out.println("oops");
+            }
+            for (int i = 0; i <troops.size() ; i++) {
+                troops.get(i).update();
+                if(i<planets.length){
+                    planets[i].update(troops,speed);
+                }
+            }
+        }
+    }
+    public int done(){
+        boolean won=true;
+        boolean lost=true;
+        for (int i = 0; i <planets.length ; i++) {
+            if(planets[i].team==1){
+                lost=false;
+            }
+            if(planets[i].team!=1){
+                won=false;
+            }
+        }
+        if(!won&&!lost){
+            return -1;
+        }
+        if(lost){
+            return 0;
+        }
+        if (won){
+            return 1;
+        }
+        return -1;
+    }
+    public void select(int x,int y, int x1,int y1){
 
     }
-    public void readmap(){
+    public void setgoto(int x, int y ){
 
     }
     public void anhilate(){
@@ -19,25 +94,32 @@ public class MicroWars {
     }
 
 }
+
 class Planet{
     private int size;
     protected int team;
     protected int x;
     protected int y;
     protected int strength;
-    protected int maxStrength;
-    public Planet(int x, int y, int team,int size){
+    public final int maxStrength=100;
+    protected int maxsize;
+    public Planet(int x, int y, int team,int maxsize){
         this.x=x;
         this.y=y;
         this.team=team;
+        this.maxsize=maxsize;
     }
-    public void strengthen(int strengthchange){
+    public void changestrength(int strengthchange){
         if(strength+strengthchange>maxStrength){
+            if(size<maxsize){
+                size++;
+            }
             strength=maxStrength;
         }
         if(strength+strengthchange<0){
             team=-1;
             size=0;
+            strength=0;
         }
         else {
             strength+=strengthchange;
@@ -47,8 +129,7 @@ class Planet{
         if(team==-1){
             return;
         }
-
-        for(int i = 0;i<size;i++) {
+        for(int i = 0;i<size*2;i++) {
             troops.add(new soldier(x, y, team, speed));
         }
     }
