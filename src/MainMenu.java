@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class MainMenu extends JPanel {
 
-
+    private Font title;
     private FontMetrics f_title;
 
     private int mouse_x, mouse_y;
@@ -29,7 +29,8 @@ public class MainMenu extends JPanel {
 
         //title = new Font("Matura MT Script Capitals", Font.BOLD,h / 10);
 
-        f_title =  getFontMetrics(customFont);
+        title = customFont;
+        f_title =  getFontMetrics(title);
 
         addMouseMotionListener(new MouseAdapter() {
             @Override
