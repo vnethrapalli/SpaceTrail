@@ -17,6 +17,7 @@ public class Runner {
 
         screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         screen.setResizable(false);
+        screen.setTitle("Space Trail");
         screen.setLocationRelativeTo(null);
         screen.setVisible(true);
         save(new Node("test.txt"));
