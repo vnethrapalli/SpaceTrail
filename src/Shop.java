@@ -57,6 +57,7 @@ public class Shop extends JPanel {
         g.fillRect(  getWidth() / 6, getHeight() / 4, getWidth() / 12, getHeight() / 20);
         g.fillRect(  2*getWidth() / 3, getHeight() / 4, getWidth() / 12, getHeight() / 20);
         g.fillRect(  5*getWidth() / 6, getHeight() / 4, getWidth() / 12, getHeight() / 20);
+        g.drawImage(triangle,5*getWidth() / 6, getHeight() / 4, getWidth() / 12, getHeight() / 20,null);
 
 
         g.fillRect(  getWidth() / 6, 7*getHeight() / 20, getWidth() / 12, getHeight() / 20);
