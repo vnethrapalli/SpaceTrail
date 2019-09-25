@@ -44,7 +44,7 @@ public class Shop extends JPanel {
         g.setColor(new Color(242,198,102));
         g.fillRect(0, 0, getWidth(), getHeight());
         g.setColor(new Color(230,94,9));
-        //buttons x difference is 1/20
+        //buttons x difference is 1/10
         g.fillRect(  getWidth() / 6, getHeight() / 4, getWidth() / 12, getHeight() / 20);
         g.fillRect(  2*getWidth() / 3, getHeight() / 4, getWidth() / 12, getHeight() / 20);
         g.fillRect(  5*getWidth() / 6, getHeight() / 4, getWidth() / 12, getHeight() / 20);
@@ -53,10 +53,21 @@ public class Shop extends JPanel {
         g.fillRect(  2*getWidth() / 3, 7*getHeight() / 20, getWidth() / 12, getHeight() / 20);
         g.fillRect(  5*getWidth() / 6, 7*getHeight() / 20, getWidth() / 12, getHeight() / 20);
 
+        g.fillRect(  getWidth() / 6, 9*getHeight() / 20, getWidth() / 12, getHeight() / 20);
+        g.fillRect(  2*getWidth() / 3, 9*getHeight() / 20, getWidth() / 12, getHeight() / 20);
+        g.fillRect(  5*getWidth() / 6, 9*getHeight() / 20, getWidth() / 12, getHeight() / 20);
 
-        g.fillRect(  getWidth() / 6, 7*getHeight() / 20, getWidth() / 12, getHeight() / 20);
-        g.fillRect(  2*getWidth() / 3, 7*getHeight() / 20, getWidth() / 12, getHeight() / 20);
-        g.fillRect(  5*getWidth() / 6, 7*getHeight() / 20, getWidth() / 12, getHeight() / 20);
+        g.fillRect(  getWidth() / 6, 11*getHeight() / 20, getWidth() / 12, getHeight() / 20);
+        g.fillRect(  2*getWidth() / 3, 11*getHeight() / 20, getWidth() / 12, getHeight() / 20);
+        g.fillRect(  5*getWidth() / 6, 11*getHeight() / 20, getWidth() / 12, getHeight() / 20);
+
+        g.fillRect(  getWidth() / 6, 13*getHeight() / 20, getWidth() / 12, getHeight() / 20);
+        g.fillRect(  2*getWidth() / 3, 13*getHeight() / 20, getWidth() / 12, getHeight() / 20);
+        g.fillRect(  5*getWidth() / 6, 13*getHeight() / 20, getWidth() / 12, getHeight() / 20);
+
+        g.fillRect(  getWidth() / 6, 3*getHeight() / 4, getWidth() / 12, getHeight() / 20);
+        g.fillRect(  2*getWidth() / 3, 3*getHeight() / 4, getWidth() / 12, getHeight() / 20);
+        g.fillRect(  5*getWidth() / 6, 3*getHeight() / 4, getWidth() / 12, getHeight() / 20);
 
         g.setColor(Color.BLACK);
         title=title.deriveFont(Font.BOLD,(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/15);
