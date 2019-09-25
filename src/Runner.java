@@ -16,6 +16,7 @@ public class Runner {
         //https://stackoverflow.com/questions/9706097/panel-size-changes-from-computer-to-computer
 
         screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        screen.setResizable(false);
         screen.setLocationRelativeTo(null);
         screen.setVisible(true);
         save(new Node("test.txt"));

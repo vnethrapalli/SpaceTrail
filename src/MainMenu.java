@@ -39,9 +39,30 @@ public class MainMenu extends JPanel {
                 mouse_x = e.getX();
                 mouse_y = e.getY();
 
+                repaint();
+
             }
 
         });
+
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+                if ((mouse_x >= 2 * getWidth() / 5 && mouse_x <= 3 * getWidth() / 5 ) && (mouse_y >= getHeight() / 2 && mouse_y <= 11 * getHeight() / 20)) {
+                    JFrame shop = new JFrame();
+                    shop.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    shop.setTitle("Shop!");
+                    shop.add(new Shop());
+                    shop.setSize(2 * (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 3 , 4 * (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 5);
+                    shop.setLocationRelativeTo(null);
+                    shop.setResizable(false);
+                    shop.setVisible(true);
+
+                }
+            }
+        });
+
 
     }
 
@@ -57,8 +78,7 @@ public class MainMenu extends JPanel {
         g.drawString("Space Trail", (getWidth()  - f_title.stringWidth("Space Trail")) / 2, getHeight() / 3);
 
         //button
-        //g.fillRect();
-
+        g.fillRect(2 * getWidth() / 5, getHeight() / 2, getWidth() / 5, getHeight() / 20);
 
     }
 }
