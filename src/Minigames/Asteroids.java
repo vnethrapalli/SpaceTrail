@@ -14,7 +14,7 @@ import java.util.Random;
 
 public class Asteroids extends JPanel {
 
-    private final int PLAYERDIAMETER = 30;
+    private final int PLAYERDIAMETER = 36;
     private final int MAXASTEROIDS = 100;
     private int x, y;
     private int transparency = 0;
@@ -142,7 +142,7 @@ public class Asteroids extends JPanel {
 
             for (int i = 0; i < asteroids.size(); i++) { // collision math
                 Rock rock = asteroids.get(i);
-                if (Math.pow(rock.rx - (x + PLAYERDIAMETER / 2),2) + Math.pow(rock.ry - (y + PLAYERDIAMETER), 2) < PLAYERDIAMETER * PLAYERDIAMETER / 4 || // top left corner
+                if (Math.pow(rock.rx - (x + PLAYERDIAMETER / 2),2) + Math.pow(rock.ry - (y + PLAYERDIAMETER / 2), 2) < PLAYERDIAMETER * PLAYERDIAMETER / 4 || // top left corner
                         Math.pow(rock.rx + rock.size - (x + PLAYERDIAMETER / 2),2) + Math.pow(rock.ry - (y + PLAYERDIAMETER / 2), 2) < PLAYERDIAMETER * PLAYERDIAMETER / 4|| // top right corner
                         Math.pow(rock.rx - (x + PLAYERDIAMETER / 2),2) + Math.pow(rock.ry + rock.size - (y + PLAYERDIAMETER / 2), 2) < PLAYERDIAMETER * PLAYERDIAMETER / 4 || // bottom left corner
                         Math.pow(rock.rx + rock.size - (x + PLAYERDIAMETER / 2),2) + Math.pow(rock.ry + rock.size - (y + PLAYERDIAMETER / 2), 2) < PLAYERDIAMETER * PLAYERDIAMETER / 4 || // bottom right corner

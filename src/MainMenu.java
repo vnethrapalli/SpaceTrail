@@ -11,6 +11,7 @@ public class MainMenu extends JPanel {
     private FontMetrics f_title;
 
     private int mouse_x, mouse_y;
+    private boolean shopAdded;
 
     public MainMenu() {
         Font customFont=null;
@@ -49,17 +50,21 @@ public class MainMenu extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
 
-                if ((mouse_x >= 2 * getWidth() / 5 && mouse_x <= 3 * getWidth() / 5 ) && (mouse_y >= getHeight() / 2 && mouse_y <= 11 * getHeight() / 20)) {
-                    JFrame shop = new JFrame();
-                    shop.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                    shop.setTitle("Shop!");
-                    shop.add(new Shop());
-                    shop.setSize(2 * (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 3 , 4 * (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 5);
-                    shop.setLocationRelativeTo(null);
-                    shop.setResizable(false);
-                    shop.setVisible(true);
+                if (!shopAdded) {
+                    shopAdded = true;
+                    if ((mouse_x >= 2 * getWidth() / 5 && mouse_x <= 3 * getWidth() / 5 ) && (mouse_y >= getHeight() / 2 && mouse_y <= 11 * getHeight() / 20)) {
+                        JFrame shop = new JFrame();
+                        shop.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                        shop.setTitle("Shop!");
+                        shop.add(new Shop());
+                        shop.setSize(2 * (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 3 , 4 * (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 5);
+                        shop.setLocationRelativeTo(null);
+                        shop.setResizable(false);
+                        shop.setVisible(true);
 
+                    }
                 }
+
             }
         });
 
