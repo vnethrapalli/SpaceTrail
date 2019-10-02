@@ -3,7 +3,6 @@ import javax.swing.*;
         import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -15,6 +14,9 @@ public class Shop extends JPanel {
     private FontMetrics f_title;
     private Image Ltriangle;
     private Image Rtriangle;
+    public String[] supplyName = {"Thing 1","Thing 2","Thing 2","Thing 3","Thing 4","Big thing"};
+    public int[] suppliesPrice = {2,3,100,5,4,2};
+
 
     public Shop() {
 
@@ -56,20 +58,7 @@ public class Shop extends JPanel {
     protected void paintComponent(Graphics g) {
         g.setColor(new Color(242,198,102));
         g.fillRect(0, 0, getWidth(), getHeight());
-        g.setColor(new Color(230,94,9));
-        //buttons x difference is 1/10
-        //https://commons.wikimedia.org/wiki/File:Green_triangle.svg
 
-        for(int i =5;i<=15;i+=2) {
-            g.fillRect(getWidth() / 6, i*getHeight() / 20, getWidth() / 12, getHeight() / 20);
-            g.fillRect(2 * getWidth() / 3, i*getHeight() / 20, getWidth() / 12, getHeight() / 20);
-            g.fillRect(5 * getWidth() / 6, i*getHeight() / 20, getWidth() / 12, getHeight() / 20);
-
-            //g.drawImage(Ltriangle, getWidth() / 6, (i*getHeight() / 20)+(getHeight()/100), getWidth() / 15, getHeight() / 30, null);
-            g.drawImage(Ltriangle, getWidth() / 6, (i*getHeight() / 20), getWidth() / 12, getHeight() / 20, null);
-
-            g.drawImage(Rtriangle, 2 * getWidth() / 3, i*getHeight() / 20, getWidth() / 12, getHeight() / 20, null);
-        }
 
         g.setColor(Color.BLACK);
         title=title.deriveFont(Font.BOLD,(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/15);
@@ -81,6 +70,29 @@ public class Shop extends JPanel {
         f_title = getFontMetrics(title);
         g.setFont(title);
         g.drawString("Choose what ye want",(getWidth())/3,getHeight()/5);
+
+        //buttons x difference is 1/10
+        //https://commons.wikimedia.org/wiki/File:Green_triangle.svg
+        title=title.deriveFont(Font.PLAIN,(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/25);
+        f_title = getFontMetrics(title);
+        g.setFont(title);
+
+        for(int i =5;i<=15;i+=2) {
+            g.setColor(new Color(230,94,9));
+            g.fillRect(getWidth() / 6, i*getHeight() / 20, getWidth() / 12, getHeight() / 20);
+            g.fillRect(2 * getWidth() / 3, i*getHeight() / 20, getWidth() / 12, getHeight() / 20);
+            g.fillRect(5 * getWidth() / 6, i*getHeight() / 20, getWidth() / 12, getHeight() / 20);
+
+            //other image option
+            // g.drawImage(Ltriangle, getWidth() / 6, (i*getHeight() / 20)+(getHeight()/100), getWidth() / 15, getHeight() / 30, null);
+            g.drawImage(Ltriangle, getWidth() / 6, i*getHeight() / 20, getWidth() / 12, getHeight() / 20, null);
+            g.drawImage(Rtriangle, 2 * getWidth() / 3, i*getHeight() / 20, getWidth() / 12, getHeight() / 20, null);
+
+            g.setColor(Color.BLACK);
+            g.drawString(supplyName[(i-5)/2]+"($"+suppliesPrice[(i-5)/2]+")",(getWidth())/3,i*getHeight()/20+f_title.getAscent()-getHeight()/100);
+
+
+        }
 
 
 
