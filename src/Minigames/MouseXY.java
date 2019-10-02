@@ -1,8 +1,10 @@
+package Minigames;
+
 import Minigames.MicroWars;
 
 import java.awt.*;
 import java.awt.event.*;
-public class MouseXY extends Frame implements MouseListener, MouseMotionListener
+public class MouseXY implements MouseListener, MouseMotionListener
 //https://way2java.com/awt-events/finding-x-y-coordinates-mouse-position-java/
 {
     private int startx, starty;
@@ -12,31 +14,37 @@ public class MouseXY extends Frame implements MouseListener, MouseMotionListener
     public MouseXY(MicroWars m)
     {
         microwar=m;
-        addMouseListener(this);
-        addMouseMotionListener(this);
-
-        setSize(300, 300);
-        setVisible(true);
     }
     // override MouseListener five abstract methods
     public void mousePressed(MouseEvent e)
     {
-        startx = e.getX();
-        starty = e.getY();
-    }
-    public void mouseReleased(MouseEvent e)
-    {
-        int endx=e.getX();
-        int endy=e.getY();
-        microwar.select(startx,starty,endx,endy);
+        if(e.getButton()==MouseEvent.BUTTON1) {
+            Point p =e.getPoint();
+            startx = (int)p.getX();
+            starty = (int)p.getY();
+        }
+
     }
     public void mouseClicked(MouseEvent e)
     {
-        x = e.getX();
-        y = e.getY();
-        microwar.setgoto(x,y);
+        if(e.getButton()!=MouseEvent.BUTTON1) {
+            Point p = e.getPoint();
+            x = (int)p.getX();
+            y = (int)p.getY();
+            microwar.setgoto(x, y);
+        }
 
     }
+    public void mouseReleased(MouseEvent e)
+    {
+        if(e.getButton()==MouseEvent.BUTTON1) {
+            Point p = e.getPoint();
+            int endx = (int)p.getX();
+            int endy = (int)p.getY();
+            microwar.select(startx, starty, endx, endy);
+        }
+    }
+
     public void mouseEntered(MouseEvent e)
     {
         x = e.getX();
