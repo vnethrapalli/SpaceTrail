@@ -142,14 +142,14 @@ public class Asteroids extends JPanel {
 
             for (int i = 0; i < asteroids.size(); i++) { // collision math
                 Rock rock = asteroids.get(i);
-                if (Math.pow(rock.rx - (x + PLAYERDIAMETER / 2),2) + Math.pow(rock.ry - (y + PLAYERDIAMETER), 2) < PLAYERDIAMETER * PLAYERDIAMETER / 4 ||
-                        Math.pow(rock.rx + rock.size - (x + PLAYERDIAMETER / 2),2) + Math.pow(rock.ry - (y + PLAYERDIAMETER / 2), 2) < PLAYERDIAMETER * PLAYERDIAMETER / 4||
-                        Math.pow(rock.rx - (x + PLAYERDIAMETER / 2),2) + Math.pow(rock.ry + rock.size - (y + PLAYERDIAMETER / 2), 2) < PLAYERDIAMETER * PLAYERDIAMETER / 4 ||
-                        Math.pow(rock.rx + rock.size - (x + PLAYERDIAMETER / 2),2) + Math.pow(rock.ry + rock.size - (y + PLAYERDIAMETER / 2), 2) < PLAYERDIAMETER * PLAYERDIAMETER / 4 ||
-                Math.pow(rock.rx + rock.size - (x + PLAYERDIAMETER / 2),2) + Math.pow(rock.ry + rock.size / 2 - (y + PLAYERDIAMETER), 2) < PLAYERDIAMETER * PLAYERDIAMETER / 4 ||
-                        Math.pow(rock.rx + rock.size / 2 - (x + PLAYERDIAMETER / 2),2) + Math.pow(rock.ry - (y + PLAYERDIAMETER / 2), 2) < PLAYERDIAMETER * PLAYERDIAMETER / 4||
-                        Math.pow(rock.rx - (x + PLAYERDIAMETER / 2),2) + Math.pow(rock.ry + rock.size / 2 - (y + PLAYERDIAMETER / 2), 2) < PLAYERDIAMETER * PLAYERDIAMETER / 4 ||
-                        Math.pow(rock.rx + rock.size / 2 - (x + PLAYERDIAMETER / 2),2) + Math.pow(rock.ry + rock.size - (y + PLAYERDIAMETER / 2), 2) < PLAYERDIAMETER * PLAYERDIAMETER / 4) {
+                if (Math.pow(rock.rx - (x + PLAYERDIAMETER / 2),2) + Math.pow(rock.ry - (y + PLAYERDIAMETER), 2) < PLAYERDIAMETER * PLAYERDIAMETER / 4 || // top left corner
+                        Math.pow(rock.rx + rock.size - (x + PLAYERDIAMETER / 2),2) + Math.pow(rock.ry - (y + PLAYERDIAMETER / 2), 2) < PLAYERDIAMETER * PLAYERDIAMETER / 4|| // top right corner
+                        Math.pow(rock.rx - (x + PLAYERDIAMETER / 2),2) + Math.pow(rock.ry + rock.size - (y + PLAYERDIAMETER / 2), 2) < PLAYERDIAMETER * PLAYERDIAMETER / 4 || // bottom left corner
+                        Math.pow(rock.rx + rock.size - (x + PLAYERDIAMETER / 2),2) + Math.pow(rock.ry + rock.size - (y + PLAYERDIAMETER / 2), 2) < PLAYERDIAMETER * PLAYERDIAMETER / 4 || // bottom right corner
+                Math.pow(rock.rx + rock.size - (x + PLAYERDIAMETER / 2),2) + Math.pow(rock.ry + rock.size / 2 - (y + PLAYERDIAMETER), 2) < PLAYERDIAMETER * PLAYERDIAMETER / 4 || // right center
+                        Math.pow(rock.rx + rock.size / 2 - (x + PLAYERDIAMETER / 2),2) + Math.pow(rock.ry - (y + PLAYERDIAMETER / 2), 2) < PLAYERDIAMETER * PLAYERDIAMETER / 4|| // top center
+                        Math.pow(rock.rx - (x + PLAYERDIAMETER / 2),2) + Math.pow(rock.ry + rock.size / 2 - (y + PLAYERDIAMETER / 2), 2) < PLAYERDIAMETER * PLAYERDIAMETER / 4 || // left center
+                        Math.pow(rock.rx + rock.size / 2 - (x + PLAYERDIAMETER / 2),2) + Math.pow(rock.ry + rock.size - (y + PLAYERDIAMETER / 2), 2) < PLAYERDIAMETER * PLAYERDIAMETER / 4) { //bottom center
 
                     isAlive = false;
                     pos.stop();
