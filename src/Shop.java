@@ -3,6 +3,8 @@ import javax.swing.*;
         import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -11,7 +13,8 @@ public class Shop extends JPanel {
     private int mouse_x, mouse_y;
     private Font title;
     private FontMetrics f_title;
-    private Image triangle;
+    private Image Ltriangle;
+    private Image Rtriangle;
 
     public Shop() {
 
@@ -42,43 +45,31 @@ public class Shop extends JPanel {
         title = customFont;
         try {
             //triangle image
-            triangle = ImageIO.read(new File("Green_triangle.png"));
+            Rtriangle = rotateR(ImageIO.read(new File("Green_triangle.png")));
+            Ltriangle = rotateL(ImageIO.read(new File("Green_triangle.png")));
+
         }catch (IOException e){
             System.out.println("no");
         }
+        }
 
-    }
     protected void paintComponent(Graphics g) {
         g.setColor(new Color(242,198,102));
         g.fillRect(0, 0, getWidth(), getHeight());
         g.setColor(new Color(230,94,9));
         //buttons x difference is 1/10
         //https://commons.wikimedia.org/wiki/File:Green_triangle.svg
-        g.fillRect(  getWidth() / 6, getHeight() / 4, getWidth() / 12, getHeight() / 20);
-        g.fillRect(  2*getWidth() / 3, getHeight() / 4, getWidth() / 12, getHeight() / 20);
-        g.fillRect(  5*getWidth() / 6, getHeight() / 4, getWidth() / 12, getHeight() / 20);
-        g.drawImage(triangle,5*getWidth() / 6, getHeight() / 4, getWidth() / 12, getHeight() / 20,null);
 
+        for(int i =5;i<=15;i+=2) {
+            g.fillRect(getWidth() / 6, i*getHeight() / 20, getWidth() / 12, getHeight() / 20);
+            g.fillRect(2 * getWidth() / 3, i*getHeight() / 20, getWidth() / 12, getHeight() / 20);
+            g.fillRect(5 * getWidth() / 6, i*getHeight() / 20, getWidth() / 12, getHeight() / 20);
 
-        g.fillRect(  getWidth() / 6, 7*getHeight() / 20, getWidth() / 12, getHeight() / 20);
-        g.fillRect(  2*getWidth() / 3, 7*getHeight() / 20, getWidth() / 12, getHeight() / 20);
-        g.fillRect(  5*getWidth() / 6, 7*getHeight() / 20, getWidth() / 12, getHeight() / 20);
+            //g.drawImage(Ltriangle, getWidth() / 6, (i*getHeight() / 20)+(getHeight()/100), getWidth() / 15, getHeight() / 30, null);
+            g.drawImage(Ltriangle, getWidth() / 6, (i*getHeight() / 20), getWidth() / 12, getHeight() / 20, null);
 
-        g.fillRect(  getWidth() / 6, 9*getHeight() / 20, getWidth() / 12, getHeight() / 20);
-        g.fillRect(  2*getWidth() / 3, 9*getHeight() / 20, getWidth() / 12, getHeight() / 20);
-        g.fillRect(  5*getWidth() / 6, 9*getHeight() / 20, getWidth() / 12, getHeight() / 20);
-
-        g.fillRect(  getWidth() / 6, 11*getHeight() / 20, getWidth() / 12, getHeight() / 20);
-        g.fillRect(  2*getWidth() / 3, 11*getHeight() / 20, getWidth() / 12, getHeight() / 20);
-        g.fillRect(  5*getWidth() / 6, 11*getHeight() / 20, getWidth() / 12, getHeight() / 20);
-
-        g.fillRect(  getWidth() / 6, 13*getHeight() / 20, getWidth() / 12, getHeight() / 20);
-        g.fillRect(  2*getWidth() / 3, 13*getHeight() / 20, getWidth() / 12, getHeight() / 20);
-        g.fillRect(  5*getWidth() / 6, 13*getHeight() / 20, getWidth() / 12, getHeight() / 20);
-
-        g.fillRect(  getWidth() / 6, 3*getHeight() / 4, getWidth() / 12, getHeight() / 20);
-        g.fillRect(  2*getWidth() / 3, 3*getHeight() / 4, getWidth() / 12, getHeight() / 20);
-        g.fillRect(  5*getWidth() / 6, 3*getHeight() / 4, getWidth() / 12, getHeight() / 20);
+            g.drawImage(Rtriangle, 2 * getWidth() / 3, i*getHeight() / 20, getWidth() / 12, getHeight() / 20, null);
+        }
 
         g.setColor(Color.BLACK);
         title=title.deriveFont(Font.BOLD,(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/15);
@@ -93,6 +84,31 @@ public class Shop extends JPanel {
 
 
 
+    }
+    //https://stackoverflow.com/questions/8639567/java-rotating-images
+    public static BufferedImage rotateL(BufferedImage img )
+    {
+        int width  = img.getWidth();
+        int height = img.getHeight();
+        BufferedImage   newImage = new BufferedImage( height, width, img.getType() );
+
+        for( int i=0 ; i < width ; i++ )
+            for( int j=0 ; j < height ; j++ )
+                newImage.setRGB( height-1-j, i, img.getRGB(i,j) );
+
+        return newImage;
+    }
+    public static BufferedImage rotateR(BufferedImage img )
+    {
+        int width  = img.getWidth();
+        int height = img.getHeight();
+        BufferedImage   newImage = new BufferedImage( height, width, img.getType() );
+
+        for( int i=0 ; i < width ; i++ )
+            for( int j=0 ; j < height ; j++ )
+                newImage.setRGB( j, width-1-i, img.getRGB(i,j) );
+
+        return newImage;
     }
 
 }
