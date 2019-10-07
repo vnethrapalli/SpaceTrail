@@ -23,7 +23,7 @@ public class Sound {
     }
     public void playOpenTheme(){
         clips[0].loop(Integer.MAX_VALUE);
-        clips[0].setFramePosition(0);
+        clips[0].setFramePosition(100);
         clips[0].start();
     }
     public void stopOpenTheme(){clips[0].stop();}
