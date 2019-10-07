@@ -8,7 +8,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class Shop extends JPanel {
-    public int[] supplies = {1,1,1,1,1,1};
+    public int[] supplies = {0,0,0,0,0,0};
     private int mouse_x, mouse_y;
     private Font title;
     private FontMetrics f_title;
@@ -31,6 +31,33 @@ public class Shop extends JPanel {
 
             }
 
+        });
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                for(int i =5;i<=15;i+=2) {
+                    if((mouse_x>=getWidth()/10&&mouse_x<=getWidth()/10+getWidth()/12)&&(mouse_y>=i*getHeight()/20&&mouse_y<=(i+1)*getHeight()/20)){
+                        if(supplies[(i-5)/2]==0){
+                        supplies[(i-5)/2]=99;
+                        }
+                        else{
+                            supplies[(i-5)/2]--;
+                        }
+                        System.out.println(supplies[(i-5)/2]);
+                    }
+                    if((mouse_x>=4*getWidth()/9&&mouse_x<=4*getWidth()/9+getWidth()/12)&&(mouse_y>=i*getHeight()/20&&mouse_y<=(i+1)*getHeight()/20)){
+                        if(supplies[(i-5)/2]==99){
+                            supplies[(i-5)/2]=0;
+                        }
+                        else{
+                            supplies[(i-5)/2]++;
+                        }
+                        System.out.println(supplies[(i-5)/2]);
+                    }
+
+                }
+
+            }
         });
         Font customFont=null;
         try {
@@ -69,7 +96,7 @@ public class Shop extends JPanel {
         title=title.deriveFont(Font.PLAIN,(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/20);
         f_title = getFontMetrics(title);
         g.setFont(title);
-        g.drawString("Choose what ye want",(getWidth())/3,getHeight()/5);
+        g.drawString("Choose what ye want",(getWidth())/3,getHeight()/7);
 
         //buttons x difference is 1/10
         //https://commons.wikimedia.org/wiki/File:Green_triangle.svg
@@ -79,17 +106,17 @@ public class Shop extends JPanel {
 
         for(int i =5;i<=15;i+=2) {
             g.setColor(new Color(230,94,9));
-            g.fillRect(getWidth() / 6, i*getHeight() / 20, getWidth() / 12, getHeight() / 20);
-            g.fillRect(2 * getWidth() / 3, i*getHeight() / 20, getWidth() / 12, getHeight() / 20);
+            g.fillRect(getWidth() / 10, i*getHeight() / 20, getWidth() / 12, getHeight() / 20);
+            g.fillRect(4 * getWidth() / 9, i*getHeight() / 20, getWidth() / 12, getHeight() / 20);
             g.fillRect(5 * getWidth() / 6, i*getHeight() / 20, getWidth() / 12, getHeight() / 20);
 
             //other image option
             // g.drawImage(Ltriangle, getWidth() / 6, (i*getHeight() / 20)+(getHeight()/100), getWidth() / 15, getHeight() / 30, null);
-            g.drawImage(Ltriangle, getWidth() / 6, i*getHeight() / 20, getWidth() / 12, getHeight() / 20, null);
-            g.drawImage(Rtriangle, 2 * getWidth() / 3, i*getHeight() / 20, getWidth() / 12, getHeight() / 20, null);
+            g.drawImage(Ltriangle, getWidth() / 10, i*getHeight() / 20, getWidth() / 12, getHeight() / 20, null);
+            g.drawImage(Rtriangle, 4 * getWidth() / 9, i*getHeight() / 20, getWidth() / 12, getHeight() / 20, null);
 
             g.setColor(Color.BLACK);
-            g.drawString(supplyName[(i-5)/2]+"($"+suppliesPrice[(i-5)/2]+")",(getWidth())/3,i*getHeight()/20+f_title.getAscent()-getHeight()/100);
+            g.drawString(supplyName[(i-5)/2]+"($"+suppliesPrice[(i-5)/2]+")",(getWidth())/5,i*getHeight()/20+f_title.getAscent()-getHeight()/100);
 
 
         }

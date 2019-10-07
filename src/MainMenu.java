@@ -50,9 +50,7 @@ public class MainMenu extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
 
-                if (!shopAdded) {
-                    shopAdded = true;
-                    if ((mouse_x >= 2 * getWidth() / 5 && mouse_x <= 3 * getWidth() / 5 ) && (mouse_y >= getHeight() / 2 && mouse_y <= 11 * getHeight() / 20)) {
+                    if ((mouse_x >= 2 * getWidth() / 5 && mouse_x <= 3 * getWidth() / 5 ) && (mouse_y >= getHeight() / 2 && mouse_y <= 11 * getHeight() / 20) && !shopAdded) {
                         JFrame shop = new JFrame();
                         shop.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                         shop.setTitle("Shop!");
@@ -61,9 +59,9 @@ public class MainMenu extends JPanel {
                         shop.setLocationRelativeTo(null);
                         shop.setResizable(false);
                         shop.setVisible(true);
+                        shopAdded = true;
 
                     }
-                }
 
             }
         });
