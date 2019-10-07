@@ -16,6 +16,7 @@ public class Shop extends JPanel {
     private Image Rtriangle;
     public String[] supplyName = {"Thing 1","Thing 2","Thing 2","Thing 3","Thing 4","Big thing"};
     public int[] suppliesPrice = {2,3,100,5,4,2};
+    public Sound music =new Sound();
 
 
     public Shop() {
@@ -80,6 +81,7 @@ public class Shop extends JPanel {
         }catch (IOException e){
             System.out.println("no");
         }
+        music.playShopTheme();
         }
 
     protected void paintComponent(Graphics g) {
@@ -97,6 +99,11 @@ public class Shop extends JPanel {
         f_title = getFontMetrics(title);
         g.setFont(title);
         g.drawString("Choose what ye want",(getWidth())/3,getHeight()/7);
+
+        title=title.deriveFont(Font.PLAIN,(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/40);
+        f_title = getFontMetrics(title);
+        g.setFont(title);
+        g.drawString("Test",3*getWidth()/5,getHeight()/5);
 
         //buttons x difference is 1/10
         //https://commons.wikimedia.org/wiki/File:Green_triangle.svg
@@ -120,8 +127,6 @@ public class Shop extends JPanel {
 
 
         }
-
-
 
     }
     //https://stackoverflow.com/questions/8639567/java-rotating-images

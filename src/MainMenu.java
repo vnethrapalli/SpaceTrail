@@ -12,6 +12,7 @@ public class MainMenu extends JPanel {
 
     private int mouse_x, mouse_y;
     private boolean shopAdded;
+    public Sound music =new Sound();
 
     public MainMenu() {
         Font customFont=null;
@@ -60,12 +61,13 @@ public class MainMenu extends JPanel {
                         shop.setResizable(false);
                         shop.setVisible(true);
                         shopAdded = true;
+                        music.stopOpenTheme();
 
                     }
 
             }
         });
-
+        music.playOpenTheme();
 
     }
 
@@ -82,6 +84,7 @@ public class MainMenu extends JPanel {
 
         //button
         g.fillRect(2 * getWidth() / 5, getHeight() / 2, getWidth() / 5, getHeight() / 20);
+
 
     }
 }
