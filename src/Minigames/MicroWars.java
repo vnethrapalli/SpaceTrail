@@ -52,6 +52,7 @@ public class MicroWars {
                 }
             }while (!thing);
             planets[i]=new Planet(x,y,-1,size);
+            planets[i].strength=0;
         }
         for (int i = numplanets-teams; i < numplanets; i++) {
             boolean thing=true;
@@ -245,7 +246,12 @@ class MicroWarsPanel extends JPanel{
                 g.setColor(color.get(team));
                 g.drawOval(x, y, size * 20, size * 20);
                 g.drawRect(m.planets[i].x, m.planets[i].y, 1, 1);
-                //g.fillArc(x,y,10,10,0,(int)(m.planets[i].untilgrowth/(100.0/360.0)));
+                x = m.planets[i].x - size * MicroWars.planetsizemod/4;
+                y = m.planets[i].y - size * MicroWars.planetsizemod/4;
+                g.fillArc(x,y,size*10,size*10,0,(int)(m.planets[i].strength/(10.0/36.0)));
+                x = m.planets[i].x - size * MicroWars.planetsizemod/2;
+                y = m.planets[i].y + size * MicroWars.planetsizemod/2;
+                g.fillRect(x,y,(int)(size * MicroWars.planetsizemod*((double)m.planets[i].untilgrowth/m.planets[i].maxStrength)),10);
             }
             for (int i = 0; i < m.troopslist.size(); i++) {
                 int x = m.troopslist.get(i).x - MicroWars.soldiersize / 2;
@@ -274,9 +280,10 @@ class Planet{
         this.y=y;
         this.team=team;
         this.maxsize=maxsize;
+        size=0;
     }
     public boolean changestrength(int soldierteam){
-        if(team==soldierteam && untilgrowth>=maxStrength && size>=maxsize && strength>=maxStrength){
+        if(team==soldierteam && size>=maxsize && strength>=maxStrength){
             return false;
         }
         int strengthchange=0;
@@ -291,10 +298,19 @@ class Planet{
             strengthchange=-1;
         }
 
-        if(strength+strengthchange>maxStrength){
+        if(strength+strengthchange>=maxStrength){
+            if(size==0){
+                size=1;
+                strength=100;
+                return true;
+            }
             untilgrowth+=strengthchange;
-            if(untilgrowth<maxStrength&&size<maxsize){
+            if(untilgrowth>maxStrength&&size<maxsize){
                 size++;
+                untilgrowth=0;
+            }
+            else if(size>=maxsize){
+                untilgrowth=0;
             }
             strength=maxStrength;
         }
@@ -304,7 +320,7 @@ class Planet{
             strength=0;
             untilgrowth=0;
         }
-        else {
+        else if(strength+strengthchange<=maxStrength){
             strength+=strengthchange;
         }
         return true;
@@ -343,6 +359,7 @@ class soldier{
     private int homex;
     private int homey;
     private int distance;
+    private boolean returntobase;
     public soldier(int x, int y,int team,int speed,int planetsize){
         this.x=x;
         this.y=y;
@@ -360,9 +377,11 @@ class soldier{
         if(TEAM!=MicroWars.PLAYERTEAM){
             if(gotox==-1&&gotoy==-1){
                 int rand = (int)(planets.length*random());
-                for (Planet p :planets) {
+                for (int i=0;i<planets.length;i++) {
+                    Planet p=planets[i];
                     if(p.team==TEAM&&p.strength<p.maxStrength){
-                        order(p.x,p.y);
+                        this.returntobase=true;
+                        order(planets[(i+1)%planets.length].x,planets[(i+1)%planets.length].y);
                         break;
                     }
                 }
@@ -421,10 +440,13 @@ class soldier{
             System.out.println("here");
         }
         if(!left) {
-            int diff1 =homex-x-MicroWars.soldiersize/2;
+            int diff1=homex-x-MicroWars.soldiersize/2;
             int diff2=homey-y-MicroWars.soldiersize/2;
-            if (distance<sqrt(pow(diff1,2)+pow(diff2,2))){
+            if (distance+1<sqrt(pow(diff1,2)+pow(diff2,2))){
                 left=true;
+                if(returntobase=true){
+                    order(homex,homey);
+                }
             }
         }
     }
