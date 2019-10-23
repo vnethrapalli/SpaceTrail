@@ -122,7 +122,6 @@ public class Asteroids extends JPanel {
                 rock.rx += rock.speed;
                 rock.ry += rock.speed * rock.slope;
 
-
             }
 
         if (winStatus) {
