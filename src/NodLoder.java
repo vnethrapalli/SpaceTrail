@@ -69,7 +69,7 @@ public class NodLoder extends JPanel {
             System.out.println(g.getFontMetrics().stringWidth(wide));
             System.out.println(getWidth());
 
-            if(g.getFontMetrics().stringWidth(wide)>getWidth()){
+            if(i!=node.getText().length-1&&g.getFontMetrics().stringWidth(wide+" "+ node.getText()[i+1])>getWidth()){
                 g.drawString(wide,0,g.getFontMetrics().getAscent()+y_pos*getHeight()/20);
                 wide="";
                 y_pos+=2;

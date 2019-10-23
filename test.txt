@@ -1,4 +1,4 @@
-Start question long long long longlong longlong longlong longlong longlong longlong longlong longlong
+AAAA BBB CCCC DDDD EEEEE FFFFFF GGGGGGG HHHHHHH IIIIII JJJJJJ KKKKK LLLLL MMMM
 3
 answer1_type1_child1.txt_child12.txt
 answer2_type2_child2.txt_child22.txt
