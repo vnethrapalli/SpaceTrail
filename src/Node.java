@@ -1,37 +1,32 @@
 import javax.swing.*;
 import java.awt.*;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+
 
 public class Node {
     public final int ROW_LENGTH=4;
-    private String text;
+    private String[] text;
     private String[][] answers;
     public static String FILE;
 
+
     public Node(String file) {
-        this.FILE=file;
+        FILE=file;
         try {
             loadfile();
         }catch (IOException ex){
             System.out.println("oops");
         }
 
-        JFrame branch = new JFrame();
-        branch.setSize(2 * (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 3 , 4 * (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 5);
-        //https://stackoverflow.com/questions/9706097/panel-size-changes-from-computer-to-computer
-        branch.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        branch.setLocationRelativeTo(null);
-        branch.add(new NodePanel());
-
     }
 
     private void loadfile() throws IOException {
         //https://www.mkyong.com/java/how-to-read-file-from-java-bufferedreader-example/
         BufferedReader in = new BufferedReader(new FileReader(FILE));
-        this.text=in.readLine();
+        this.text= in.readLine().split(" ");
         String num=in.readLine();
         int number=Integer.parseInt(num);
         answers=new String[number][ROW_LENGTH];
@@ -43,7 +38,15 @@ public class Node {
             }
         }
 
+
     }
+    public String[] getText(){
+        return text;
+    }
+    public String[][] getAns(){
+        return answers;
+    }
+
 
     private class NodePanel extends JPanel {
 

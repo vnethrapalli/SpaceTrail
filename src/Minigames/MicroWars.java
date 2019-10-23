@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Random;
 
 import static java.lang.Math.*;
-public class MicroWars {
+public class MicroWars implements MiniGame{
     public HashMap<Point,ArrayList<soldier>> troops=new HashMap<>();
     public ArrayList<soldier> troopslist=new ArrayList<>();
     public Planet[] planets;
@@ -21,11 +21,15 @@ public class MicroWars {
     public int victory=-1;
     public final static int WIN=1;
     public final static int LOSE=0;
-    public MicroWars(int numplanets,int maxwidth,int maxheight,int maxsize,int teams,int speed) {
+    public final  int AIproduction;
+    public final int Playerproduction;
+    public MicroWars(int numplanets,int maxwidth,int maxheight,int maxsize,int teams,int speed,int aiprod,int pprod) {
+        AIproduction=aiprod;
+        Playerproduction=pprod;
         while(!makemap(numplanets,maxwidth,maxheight,maxsize,teams,speed)){
             numplanets--;
         }
-        play();
+
     }
     private boolean makemap(int numplanets,int maxwidth,int maxheight,int maxsize,int teams,int speed){
         int checking=0;
@@ -51,7 +55,7 @@ public class MicroWars {
                     return false;
                 }
             }while (!thing);
-            planets[i]=new Planet(x,y,-1,size);
+            planets[i]=new Planet(x,y,-1,size,Playerproduction,AIproduction);
             planets[i].strength=0;
         }
         for (int i = numplanets-teams; i < numplanets; i++) {
@@ -73,10 +77,17 @@ public class MicroWars {
                     return false;
                 }
             }while (!thing);
-            planets[i]=new Planet(x,y,numplanets-i,size);
+            planets[i]=new Planet(x,y,numplanets-i,size,Playerproduction,AIproduction);
             planets[i].size=1;
             planets[i].strength=100;
         }
+
+        return true;
+    }
+    public int winner(){
+        return victory;
+    }
+    public void play(){
         JFrame game = new JFrame();
         game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         game.setTitle("game");
@@ -85,9 +96,6 @@ public class MicroWars {
         game.setLocationRelativeTo(null);
         game.setVisible(true);
         paint.addMouseListener(new MouseXY(this));
-        return true;
-    }
-    public void play(){
         int time=0;
         while(done()==-1){
             try {
@@ -99,7 +107,7 @@ public class MicroWars {
                 s.update(troops,planets);
             }
             for (int i = 0; i <planets.length; i++) {
-                if(time%10==0) {
+                if(time%15==0) {
                     planets[i].update(troops, troopslist, speed);
                 }
             }
@@ -109,6 +117,7 @@ public class MicroWars {
         }
         victory=done();
         paint.repaint();
+        game.remove(paint);
     }
     public int done(){
         boolean won=true;
@@ -275,12 +284,16 @@ class Planet{
     public final int maxStrength=100;
     protected int maxsize;
     protected int untilgrowth;
-    public Planet(int x, int y, int team,int maxsize){
+    private int AIprod;
+    private int Pprod;
+    public Planet(int x, int y, int team,int maxsize,int pprod, int aiprod){
         this.x=x;
         this.y=y;
         this.team=team;
         this.maxsize=maxsize;
         size=0;
+        AIprod=aiprod;
+        Pprod=pprod;
     }
     public boolean changestrength(int soldierteam){
         if(team==soldierteam && size>=maxsize && strength>=maxStrength){
@@ -331,10 +344,10 @@ class Planet{
         }
         int soldiers=0;
         if(team==MicroWars.PLAYERTEAM){
-            soldiers=size*2;
+            soldiers=size*Pprod;
         }
         else {
-            soldiers=(int)(size*2);
+            soldiers=size*AIprod;
         }
         for(int i = 0;i<soldiers;i++) {
             int n = (int)((random()-0.5)*size*MicroWars.planetsizemod);
@@ -368,6 +381,7 @@ class soldier{
         distance=planetsize;
         this.TEAM=team;
         this.speed=speed;
+        returntobase=false;
     }
     public void order(int x, int y){
         gotox=x;
@@ -444,7 +458,7 @@ class soldier{
             int diff2=homey-y-MicroWars.soldiersize/2;
             if (distance+1<sqrt(pow(diff1,2)+pow(diff2,2))){
                 left=true;
-                if(returntobase=true){
+                if(returntobase){
                     order(homex,homey);
                 }
             }
