@@ -1,6 +1,6 @@
-AAAA BBB CCCC DDDD EEEEE FFFFFF GGGGGGG HHHHHHH IIIIII JJJJJJ KKKKK LLLLL MMMM
+A militant force of squirrels bombardes your ship. They say you will join them or die. But then a light shown from above, and god came down and said let there be light. And everyone lived happily ever after. A bit more text idk
 3
-answer1_type1_child1.txt_child12.txt
-answer2_type2_child2.txt_child22.txt
-answer3_type3_child3.txt_child32.txt
+Pray for god(Prayer)_type1_child1.txt_child12.txt
+Join the squirrels against god (Rebel)_type2_child2.txt_child22.txt
+Jest commit much sudoku (sodoku)_type3_child3.txt_child32.txt
 

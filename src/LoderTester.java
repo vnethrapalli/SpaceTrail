@@ -3,7 +3,7 @@ import java.awt.*;
 
 public class LoderTester {
     public static void main(String[] args) {
-        //NodLoder nod=new NodLoder("test.txt");
+        NodLoder nod=new NodLoder("test.txt");
         JFrame Loder = new JFrame();
         Loder.setTitle("Nod");
         Loder.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -13,5 +13,6 @@ public class LoderTester {
         Loder.add(new NodLoder("test.txt"));
         Loder.setLocationRelativeTo(null);
         Loder.setVisible(true);
+
     }
 }

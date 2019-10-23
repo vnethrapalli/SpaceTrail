@@ -2,9 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class NodLoder extends JPanel {
     private Font title;
@@ -13,9 +13,11 @@ public class NodLoder extends JPanel {
     private int mouse_x, mouse_y;
     private Node node;
     private String wide;
-    private int y_pos;
+    private String[][] answers;
 
     public NodLoder(String filename) {
+        node=new Node(filename);
+        answers=node.getAns();
         Font customFont=null;
         try {
             //create the font to use. Specify the size!
@@ -47,8 +49,9 @@ public class NodLoder extends JPanel {
             }
 
         });
-        node=new Node(filename);
+
         wide="";
+
     }
     public void draw(){
         repaint();
@@ -58,16 +61,16 @@ public class NodLoder extends JPanel {
         //background
         g.setColor(Color.black);
         g.fillRect(0, 0, getWidth(), getHeight());
+        g.setColor(Color.WHITE);
+        g.drawRect(0,0,getWidth()-1,2*getHeight()/5);
 
         //title
         g.setColor(Color.yellow);
         g.setFont(title);
-        y_pos=1;
+        int y_pos=1;
 
         for(int i=0;i<node.getText().length;i++){
 
-            System.out.println(g.getFontMetrics().stringWidth(wide));
-            System.out.println(getWidth());
 
             if(i!=node.getText().length-1&&g.getFontMetrics().stringWidth(wide+" "+ node.getText()[i+1])>getWidth()){
                 g.drawString(wide,0,g.getFontMetrics().getAscent()+y_pos*getHeight()/20);
@@ -75,21 +78,36 @@ public class NodLoder extends JPanel {
                 y_pos+=2;
 
             }
-            System.out.println(g.getFontMetrics().stringWidth(wide));
-            System.out.println(getWidth());
             wide+=" ";
             wide+=node.getText()[i];
         }
         if(g.getFontMetrics().stringWidth(wide)<getWidth()){
-            g.drawString(wide,0,y_pos);
+            g.drawString(wide,0,g.getFontMetrics().getAscent()+y_pos*getHeight()/20);
         }
         wide="";
 
-        //g.drawString(node.getText(),0,f_title.getAscent());
+        for(int i=0;i<answers.length;i++) {
 
-        //button
-        g.fillRect(2 * getWidth() / 5, getHeight() / 2, getWidth() / 5, getHeight() / 20);
 
+            //button
+            g.setColor(Color.BLACK);
+            //g.setColor(Color.MAGENTA);      Test string hitbox-
+            Rectangle2D.Double rect =new Rectangle2D.Double();
+            rect.setRect(f_title.getStringBounds((i+1)+". "+answers[i][0],g));
+            g.fillRect(getWidth()/20,(i*2+9)*getHeight()/20, (int)rect.width,(int)rect.height);
+
+            g.setColor(Color.YELLOW);
+            g.drawString((i+1)+". "+answers[i][0],getWidth()/20,(i*2+10)*getHeight()/20-getHeight()/100);
+/*            g.setColor(Color.yellow);
+            this.setLayout(null);
+            JLabel j1=new JLabel("BEEEEEEEEP");
+            j1.setLocation(3*getWidth()/5,getHeight()/2);
+            this.add(j1);
+
+            j1.setForeground(Color.yellow);
+*/
+
+        }
 
     }
 
