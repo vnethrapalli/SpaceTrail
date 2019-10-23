@@ -31,7 +31,10 @@ public class Asteroids extends JPanel {
     private ArrayList<Rock> asteroids = new ArrayList<Rock>();
 
     private Image backdrop;
+    private boolean winStatus;
 
+    private Font customFont;
+    private FontMetrics fm;
 
     public Asteroids() {
 
@@ -46,6 +49,20 @@ public class Asteroids extends JPanel {
         fade = new Timer(100, new FadeOutTimer());
         pos.start();
         aster.start();
+
+        try {
+            //create the font to use. Specify the size!
+            //https://www.dafontfree.net/freefonts-matura-mt-script-capitals-f65093.htm
+            //https://stackoverflow.com/questions/5652344/how-can-i-use-a-custom-font-in-java
+            customFont = Font.createFont(Font.TRUETYPE_FONT, new File("MATURASC.ttf")).deriveFont(Font.BOLD,(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/10);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch(FontFormatException e) {
+            e.printStackTrace();
+        }
+
+        fm = getFontMetrics(customFont);
+
 
         setFocusable(true);
         addKeyListener(new KeyListener() {
@@ -62,7 +79,6 @@ public class Asteroids extends JPanel {
                 else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
                     dirPressed[3] = true;
                 }
-
 
             }
 
@@ -93,8 +109,6 @@ public class Asteroids extends JPanel {
             startValues = false;
         }
 
-        if (isAlive) {
-
             g.drawImage(backdrop, 0, 0, null, null);
 
             g.setColor(Color.yellow);
@@ -105,20 +119,18 @@ public class Asteroids extends JPanel {
                 Rock rock = asteroids.get(i);
                 g.fillRect(rock.rx, rock.ry, rock.size, rock.size);
 
-                if (i % 2 == 0) { //some go to the right
-                    rock.rx += rock.speed;
-                    rock.ry += rock.speed * rock.slope;
-                }
-                else {
-                    rock.rx -= rock.speed; // some go to the left
-                    rock.ry -= rock.speed * rock.slope;
-                }
-            }
-        }
+                rock.rx += rock.speed;
+                rock.ry += rock.speed * rock.slope;
 
-        else  {
+
+            }
+
+        if (winStatus) {
             g.setColor(new Color(0, 0, 0, transparency));
             g.fillRect(0, 0, getWidth(), getHeight());
+            g.setColor(Color.yellow);
+            g.setFont(customFont);
+            g.drawString("you win!", (getWidth() - fm.stringWidth("you win!")) / 2, getHeight() / 2);
         }
 
 
@@ -157,6 +169,14 @@ public class Asteroids extends JPanel {
                     fade.start();
                     System.out.println("You lived " + (System.currentTimeMillis() - startTime) / 1000.0 + " seconds!");
                 }
+
+                else if ((System.currentTimeMillis() - startTime) / 1000.0 > 20.0) {
+                    winStatus = true;
+                    pos.stop();
+                    aster.stop();
+                    fade.start();
+
+                }
             }
 
             if (isAlive)
@@ -185,6 +205,8 @@ public class Asteroids extends JPanel {
             if (transparency < 255)
                 transparency += 5;
 
+            System.out.println(1);
+
             repaint();
         }
     }
@@ -203,11 +225,42 @@ public class Asteroids extends JPanel {
             slope = (int)(5 * r.nextDouble() - 5 * r.nextDouble());
             speed = r.nextInt(3) + 1;
 
-            rx = r.nextInt(getWidth());
-            ry = r.nextInt(getHeight());
-            while(Math.abs(x - rx) < 50 || Math.abs(y - ry) < 50) {
+            int upDownLeftRight = r.nextInt(4);
+
+            if (upDownLeftRight == 0) {
                 rx = r.nextInt(getWidth());
+                ry = r.nextInt(getHeight() / 10);
+            }
+            else if (upDownLeftRight == 1) {
+                rx = r.nextInt(getWidth());
+                ry = r.nextInt(getHeight() / 10) + 9 * getHeight() / 10;
+            }
+            else if (upDownLeftRight == 2) {
+                rx = r.nextInt(getWidth() / 10);
                 ry = r.nextInt(getHeight());
+            }
+            else if (upDownLeftRight == 3) {
+                rx = r.nextInt(getWidth() / 10) + 9 * getWidth() / 10;
+                ry = r.nextInt(getHeight());
+            }
+
+            while(Math.abs(x - rx) < 50 || Math.abs(y - ry) < 50) {
+                if (upDownLeftRight == 0) {
+                    rx = r.nextInt(getWidth());
+                    ry = r.nextInt(getHeight() / 10);
+                }
+                else if (upDownLeftRight == 1) {
+                    rx = r.nextInt(getWidth());
+                    ry = r.nextInt(getHeight() / 10) + 9 * getHeight() / 10;
+                }
+                else if (upDownLeftRight == 2) {
+                    rx = r.nextInt(getWidth() / 10);
+                    ry = r.nextInt(getHeight());
+                }
+                else if (upDownLeftRight == 3) {
+                    rx = r.nextInt(getWidth() / 10) + 9 * getWidth() / 10;
+                    ry = r.nextInt(getHeight());
+                }
             }
 
         }
