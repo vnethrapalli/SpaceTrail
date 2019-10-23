@@ -15,7 +15,7 @@ import java.util.Random;
 public class Asteroids extends JPanel{
 
     private final int PLAYERDIAMETER = 36;
-    private final int MAXASTEROIDS = 100;
+    private final int MAXASTEROIDS = 160;
     private int x, y;
     private int transparency = 0;
     private long startTime = System.currentTimeMillis();
@@ -45,7 +45,7 @@ public class Asteroids extends JPanel{
         }
 
         pos = new Timer(20, new AdjustPositionTimer());
-        aster = new Timer(500, new NewAsteroidTimer());
+        aster = new Timer(300, new NewAsteroidTimer());
         fade = new Timer(100, new FadeOutTimer());
         pos.start();
         aster.start();
@@ -109,6 +109,7 @@ public class Asteroids extends JPanel{
             startValues = false;
         }
 
+        if (isAlive) {
             g.drawImage(backdrop, 0, 0, null, null);
 
             g.setColor(Color.yellow);
@@ -119,10 +120,19 @@ public class Asteroids extends JPanel{
                 Rock rock = asteroids.get(i);
                 g.fillRect(rock.rx, rock.ry, rock.size, rock.size);
 
-                rock.rx += rock.speed;
-                rock.ry += rock.speed * rock.slope;
+                if (i % 2 == 0) {
+                    rock.rx += rock.speed;
+                    rock.ry += rock.speed * rock.slope;
+                }
+                else {
+                    rock.rx -= rock.speed;
+                    rock.ry -= rock.speed * rock.slope;
+                }
 
             }
+
+        }
+
 
         if (winStatus) {
             g.setColor(new Color(0, 0, 0, transparency));
@@ -169,7 +179,7 @@ public class Asteroids extends JPanel{
                     System.out.println("You lived " + (System.currentTimeMillis() - startTime) / 1000.0 + " seconds!");
                 }
 
-                else if ((System.currentTimeMillis() - startTime) / 1000.0 > 20.0) {
+                else if ((System.currentTimeMillis() - startTime) / 1000.0 > 30.0) {
                     winStatus = true;
                     pos.stop();
                     aster.stop();
@@ -222,7 +232,7 @@ public class Asteroids extends JPanel{
             Random r = new Random();
             size = r.nextInt(30) + 15;
             slope = (int)(5 * r.nextDouble() - 5 * r.nextDouble());
-            speed = r.nextInt(3) + 1;
+            speed = r.nextInt(3) + 2;
 
             int upDownLeftRight = r.nextInt(4);
 
