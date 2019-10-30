@@ -44,10 +44,19 @@ public class NodLoder extends JPanel {
                 mouse_x = e.getX();
                 mouse_y = e.getY();
 
-
-
             }
 
+        });
+        addMouseListener(new MouseAdapter() {
+            @Override
+            //actions on click
+            public void mouseClicked(MouseEvent e) {
+                for(int i =5;i<=15;i+=2) { //for loop in same format as paint component
+
+
+                }
+
+            }
         });
 
         wide="";
