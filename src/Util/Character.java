@@ -1,3 +1,5 @@
+package Util;
+
 public class Character {
 
     public final boolean gender;

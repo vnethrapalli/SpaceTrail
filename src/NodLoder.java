@@ -1,3 +1,5 @@
+import Minigames.*;
+import Util.Character;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -5,15 +7,19 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class NodLoder extends JPanel {
     private Font title;
     private FontMetrics f_title;
-
+    private ArrayList<Rectangle2D.Double> rectList = new ArrayList<>();
     private int mouse_x, mouse_y;
     private Node node;
     private String wide;
     private String[][] answers;
+    private int index=0;
+    private boolean win;
+    private String nextnode;
 
     public NodLoder(String filename) {
         node=new Node(filename);
@@ -51,9 +57,18 @@ public class NodLoder extends JPanel {
             @Override
             //actions on click
             public void mouseClicked(MouseEvent e) {
-                for(int i =5;i<=15;i+=2) { //for loop in same format as paint component
-
-
+                for(int i =0;i<rectList.size();i++) { //for loop in same format as paint component
+                    if(rectList.get(i).contains(new Point(mouse_x,mouse_y)))
+                        index=i;
+                        win=runMini(answers[index][1]);
+                        if(win){
+                            nextnode=answers[index][2];
+                            System.out.println("win");
+                        }
+                        if(!win){
+                            nextnode=answers[index][3];
+                            System.out.println("ose");
+                        }
                 }
 
             }
@@ -103,6 +118,7 @@ public class NodLoder extends JPanel {
             //g.setColor(Color.MAGENTA);      Test string hitbox-
             Rectangle2D.Double rect =new Rectangle2D.Double();
             rect.setRect(f_title.getStringBounds((i+1)+". "+answers[i][0],g));
+            rectList.add(rect);
             g.fillRect(getWidth()/20,(i*2+9)*getHeight()/20, (int)rect.width,(int)rect.height);
 
             g.setColor(Color.YELLOW);
@@ -117,6 +133,25 @@ public class NodLoder extends JPanel {
 */
 
         }
+
+    }
+    private boolean runMini(String miniName){
+
+            if (miniName.equals("Asteroids")){
+                return false;
+
+            }
+            else if (miniName.equals("MicroWars")){
+                MicroWars m=new MicroWars(10,500,400,3,2,3,4,3);
+                m.play();
+                return m.winner();
+            }
+            else if (miniName.equals("Shop")){
+                Shop s=new Shop(new Character(false,1));
+                return s.winner();
+
+            }
+            return false;
 
     }
 

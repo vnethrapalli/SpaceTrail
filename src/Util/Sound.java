@@ -1,8 +1,11 @@
+package Util;
+
 import javax.sound.sampled.*;
 import java.io.File;
 
+
 public class Sound {
-    private String[] files = { "starwars.wav","Shop.wav"};
+    private String[] files = { "starwars.wav","Minigames.Shop.wav"};
     private Clip[] clips = new Clip[files.length];
 
     public Sound() {

@@ -1,3 +1,5 @@
+package Minigames;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -8,8 +10,28 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import Util.Sound;
+import Util.Character;
 
-public class Shop extends JPanel {
+public class Shop extends JPanel{
+    public Character charact;
+
+    public Shop(Character playerMan){
+        charact=playerMan;
+    }
+    public void play(){
+        JFrame shop = new JFrame();
+        shop.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        shop.setTitle("Shop!");
+        shop.add(new ShopPanel());
+        shop.setSize(2 * (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 3 , 4 * (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 5);
+        shop.setLocationRelativeTo(null);
+        shop.setResizable(false);
+        shop.setVisible(true);
+    }
+    public boolean winner(){return false;}
+}
+class ShopPanel extends JPanel {
     public int[] supplies = {0,0,0,0,0,0}; //amount of supplies that will be bought
     private int mouse_x, mouse_y; //mouse positions x and y
     private Font font; //actual font
@@ -22,7 +44,7 @@ public class Shop extends JPanel {
     public Timer animate=new Timer(0,new TimerListener()); //animater
 
 
-    public Shop() {
+    public ShopPanel() {
         //allows for tracking mouse location
         addMouseMotionListener(new MouseAdapter() {
                         @Override
@@ -102,7 +124,7 @@ public class Shop extends JPanel {
         font=font.deriveFont(Font.BOLD,(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/15);
         fontMetric = getFontMetrics(font);
         g.setFont(font);
-        g.drawString("Shop",0,fontMetric.getAscent());
+        g.drawString("Minigames.Shop",0,fontMetric.getAscent());
 
         //Banner
         font=font.deriveFont(Font.PLAIN,(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/20);

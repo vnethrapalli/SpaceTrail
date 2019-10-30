@@ -84,8 +84,8 @@ public class MicroWars implements MiniGame{
 
         return true;
     }
-    public int winner(){
-        return victory;
+    public boolean winner(){
+        return victory==1;
     }
     public void play(){
         JFrame game = new JFrame();
