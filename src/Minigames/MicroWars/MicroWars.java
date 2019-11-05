@@ -1,14 +1,15 @@
-package Minigames;
+package Minigames.MicroWars;
+
+import Minigames.MiniGame;
 
 import javax.swing.*;
 import java.awt.*;
-import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
 import static java.lang.Math.*;
-public class MicroWars implements MiniGame{
+public class MicroWars implements MiniGame {
     public HashMap<Point,ArrayList<soldier>> troops=new HashMap<>();
     public ArrayList<soldier> troopslist=new ArrayList<>();
     public Planet[] planets;

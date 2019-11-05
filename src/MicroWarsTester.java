@@ -1,4 +1,4 @@
-import Minigames.MicroWars;
+import Minigames.MicroWars.MicroWars;
 
 
 public class MicroWarsTester {
