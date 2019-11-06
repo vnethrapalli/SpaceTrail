@@ -20,9 +20,11 @@ public class NodLoder extends JPanel {
     private int index=0;
     private boolean win;
     private String nextnode;
+    private JFrame myFrame;
 
-    public NodLoder(String filename) {
+    public NodLoder(String filename, JFrame frame) {
         node=new Node(filename);
+        myFrame=frame;
         answers=node.getAns();
         Font customFont=null;
         try {
@@ -58,17 +60,18 @@ public class NodLoder extends JPanel {
             //actions on click
             public void mouseClicked(MouseEvent e) {
                 for(int i =0;i<rectList.size();i++) { //for loop in same format as paint component
-                    if(rectList.get(i).contains(new Point(mouse_x,mouse_y)))
-                        index=i;
-                        win=runMini(answers[index][1]);
-                        if(win){
-                            nextnode=answers[index][2];
+                    if(rectList.get(i).contains(new Point(mouse_x,mouse_y))) {
+                        index = i;
+                        win = runMini(answers[index][1]);
+                        if (win) {
+                            nextnode = answers[index][2];
                             System.out.println("win");
                         }
-                        if(!win){
-                            nextnode=answers[index][3];
+                        if (!win) {
+                            nextnode = answers[index][3];
                             System.out.println("ose");
                         }
+                    }
                 }
 
             }
@@ -117,9 +120,8 @@ public class NodLoder extends JPanel {
             g.setColor(Color.BLACK);
             //g.setColor(Color.MAGENTA);      Test string hitbox-
             Rectangle2D.Double rect =new Rectangle2D.Double();
-            rect.setRect(f_title.getStringBounds((i+1)+". "+answers[i][0],g));
+            rect.setRect(getWidth()/20,(i*2+9)*getHeight()/20, f_title.getStringBounds((i+1)+". "+answers[i][0],g).getWidth(),f_title.getStringBounds((i+1)+". "+answers[i][0],g).getHeight());
             rectList.add(rect);
-            g.fillRect(getWidth()/20,(i*2+9)*getHeight()/20, (int)rect.width,(int)rect.height);
 
             g.setColor(Color.YELLOW);
             g.drawString((i+1)+". "+answers[i][0],getWidth()/20,(i*2+10)*getHeight()/20-getHeight()/100);
@@ -138,13 +140,41 @@ public class NodLoder extends JPanel {
     private boolean runMini(String miniName){
 
             if (miniName.equals("Asteroids")){
+                JFrame asteroid = new JFrame();
+                asteroid.setTitle("Asteroids");
+                asteroid.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                asteroid.setResizable(false);
+                asteroid.setSize(2 * (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 3 , 4 * (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 5);
+                asteroid.add(new Asteroids());
+                asteroid.setLocationRelativeTo(null);
+                asteroid.setVisible(true);
                 return false;
 
             }
             else if (miniName.equals("MicroWars")){
-                MicroWars m=new MicroWars(10,500,400,3,2,3,4,3);
+                MicroWars m =new MicroWars(10,500,400,3,2,3,4,3);
+                JFrame dumbGame = new JFrame();
+                dumbGame.setTitle("DumbGame");
+                dumbGame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                dumbGame.setResizable(false);
+                dumbGame.setSize(2 * (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 3 , 4 * (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 5);
+                dumbGame.add(m);
+                dumbGame.setLocationRelativeTo(null);
+                dumbGame.setVisible(true);
                 m.play();
-                return m.winner();
+//                MicroWars m=new MicroWars(10,500,400,3,2,3,4,3);
+//                myFrame.removeAll();
+//                myFrame.validate();
+//                myFrame.repaint();
+//                myFrame.add(m.paint);
+//                myFrame.validate();
+//                myFrame.setVisible(true);
+//
+//                m.play();
+//                m.winner();
+//                MicroWars m=new MicroWars(10,500,400,3,2,3,4,3);
+//                m.play();
+//                return m.winner();
             }
             else if (miniName.equals("Shop")){
                 Shop s=new Shop(new Character(false,1));

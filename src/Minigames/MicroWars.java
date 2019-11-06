@@ -8,14 +8,14 @@ import java.util.HashMap;
 import java.util.Random;
 
 import static java.lang.Math.*;
-public class MicroWars implements MiniGame{
+public class MicroWars extends JPanel implements MiniGame {
     public HashMap<Point,ArrayList<soldier>> troops=new HashMap<>();
     public ArrayList<soldier> troopslist=new ArrayList<>();
     public Planet[] planets;
     private int speed;
     private ArrayList<soldier> selected = new ArrayList<>();
     public static final int PLAYERTEAM=1;
-    private MicroWarsPanel paint=new MicroWarsPanel(this);
+    //public MicroWarsPanel paint=new MicroWarsPanel(this);
     public final static int soldiersize=4;
     public final static int planetsizemod=20;
     public int victory=-1;
@@ -23,7 +23,13 @@ public class MicroWars implements MiniGame{
     public final static int LOSE=0;
     public final  int AIproduction;
     public final int Playerproduction;
+    public HashMap<Integer,Color> color =new HashMap<>();
+    private Color[] c = {Color.BLUE,Color.RED,Color.MAGENTA,Color.ORANGE};
     public MicroWars(int numplanets,int maxwidth,int maxheight,int maxsize,int teams,int speed,int aiprod,int pprod) {
+        color.put(-1,Color.BLACK);
+        for(int i=0;i<c.length;i++){
+            color.put(i,c[i]);
+        }
         AIproduction=aiprod;
         Playerproduction=pprod;
         while(!makemap(numplanets,maxwidth,maxheight,maxsize,teams,speed)){
@@ -88,14 +94,15 @@ public class MicroWars implements MiniGame{
         return victory==1;
     }
     public void play(){
-        JFrame game = new JFrame();
-        game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        game.setTitle("game");
-        game.add(paint);
-        game.setSize(2 * (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 3 , 4 * (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 5);
-        game.setLocationRelativeTo(null);
-        game.setVisible(true);
-        paint.addMouseListener(new MouseXY(this));
+//        JFrame game = new JFrame();
+//        game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        game.setTitle("game");
+//        System.out.println(paint);
+//        game.add(paint);
+//        game.setSize(2 * (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 3 , 4 * (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 5);
+//        game.setLocationRelativeTo(null);
+//        game.setVisible(true);
+//        paint.addMouseListener(new MouseXY(this));
         int time=0;
         while(done()==-1){
             try {
@@ -112,12 +119,12 @@ public class MicroWars implements MiniGame{
                 }
             }
             anhilate();
-            paint.repaint();
+            repaint();
             time++;
         }
         victory=done();
-        paint.repaint();
-        game.remove(paint);
+        repaint();
+//        game.remove(paint);
     }
     public int done(){
         boolean won=true;
@@ -163,6 +170,48 @@ public class MicroWars implements MiniGame{
             }
         }
         selected.clear();
+    }
+    protected void paintComponent(Graphics g) {
+        if ((victory == MicroWars.WIN || victory == MicroWars.LOSE)){
+            if(victory==MicroWars.WIN){
+                g.drawString("You Win",getWidth()/2,getHeight()/2);
+            }
+            if(victory==MicroWars.LOSE){
+                g.drawString("You Lose",1000,300);
+            }
+
+        } else {
+            super.paintComponent(g);
+            for (int i = 0; i < planets.length; i++) {
+                if (planets[i] == null) {
+                    return;
+                }
+                int size = planets[i].size;
+                if (size == 0) {
+                    size++;
+                }
+                int x = planets[i].x - size * MicroWars.planetsizemod / 2;
+                int y = planets[i].y - size * MicroWars.planetsizemod / 2;
+                int team = planets[i].team;
+                g.setColor(color.get(team));
+                g.drawOval(x, y, size * 20, size * 20);
+                g.drawRect(planets[i].x, planets[i].y, 1, 1);
+                x = planets[i].x - size * MicroWars.planetsizemod/4;
+                y = planets[i].y - size * MicroWars.planetsizemod/4;
+                g.fillArc(x,y,size*10,size*10,0,(int)(planets[i].strength/(10.0/36.0)));
+                x = planets[i].x - size * MicroWars.planetsizemod/2;
+                y = planets[i].y + size * MicroWars.planetsizemod/2;
+                g.fillRect(x,y,(int)(size * MicroWars.planetsizemod*((double)planets[i].untilgrowth/planets[i].maxStrength)),10);
+            }
+            for (int i = 0; i < troopslist.size(); i++) {
+                int x = troopslist.get(i).x - MicroWars.soldiersize / 2;
+                int y = troopslist.get(i).y - MicroWars.soldiersize / 2;
+                int team = troopslist.get(i).TEAM;
+                g.setColor(color.get(team));
+                g.drawOval(x, y, 4, 4);
+            }
+
+        }
     }
     public void anhilate(){
         for (int i=0;i<troopslist.size();i++) {
@@ -215,62 +264,6 @@ public class MicroWars implements MiniGame{
             }
         }
 
-    }
-
-}
-
-class MicroWarsPanel extends JPanel{
-    public MicroWars m;
-    public HashMap<Integer,Color> color =new HashMap<>();
-    private Color[] c = {Color.BLUE,Color.RED,Color.MAGENTA,Color.ORANGE};
-    public MicroWarsPanel(MicroWars m){
-        this.m = m;
-        color.put(-1,Color.BLACK);
-        for(int i=0;i<c.length;i++){
-            color.put(i,c[i]);
-        }
-    }
-    protected void paintComponent(Graphics g) {
-        if ((m.victory == MicroWars.WIN || m.victory == MicroWars.LOSE)){
-            if(m.victory==MicroWars.WIN){
-                g.drawString("You Win",getWidth()/2,getHeight()/2);
-            }
-            if(m.victory==MicroWars.LOSE){
-                g.drawString("You Lose",1000,300);
-            }
-
-        } else {
-            super.paintComponent(g);
-            for (int i = 0; i < m.planets.length; i++) {
-                if (m.planets[i] == null) {
-                    return;
-                }
-                int size = m.planets[i].size;
-                if (size == 0) {
-                    size++;
-                }
-                int x = m.planets[i].x - size * MicroWars.planetsizemod / 2;
-                int y = m.planets[i].y - size * MicroWars.planetsizemod / 2;
-                int team = m.planets[i].team;
-                g.setColor(color.get(team));
-                g.drawOval(x, y, size * 20, size * 20);
-                g.drawRect(m.planets[i].x, m.planets[i].y, 1, 1);
-                x = m.planets[i].x - size * MicroWars.planetsizemod/4;
-                y = m.planets[i].y - size * MicroWars.planetsizemod/4;
-                g.fillArc(x,y,size*10,size*10,0,(int)(m.planets[i].strength/(10.0/36.0)));
-                x = m.planets[i].x - size * MicroWars.planetsizemod/2;
-                y = m.planets[i].y + size * MicroWars.planetsizemod/2;
-                g.fillRect(x,y,(int)(size * MicroWars.planetsizemod*((double)m.planets[i].untilgrowth/m.planets[i].maxStrength)),10);
-            }
-            for (int i = 0; i < m.troopslist.size(); i++) {
-                int x = m.troopslist.get(i).x - MicroWars.soldiersize / 2;
-                int y = m.troopslist.get(i).y - MicroWars.soldiersize / 2;
-                int team = m.troopslist.get(i).TEAM;
-                g.setColor(color.get(team));
-                g.drawOval(x, y, 4, 4);
-            }
-
-        }
     }
 
 }
