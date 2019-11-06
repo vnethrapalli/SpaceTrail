@@ -311,6 +311,7 @@ public class HackerMan implements MiniGame {
             paint.repaint();
             time++;
         }
+        game.dispose();
     }
     public boolean winner(){
         return victory;

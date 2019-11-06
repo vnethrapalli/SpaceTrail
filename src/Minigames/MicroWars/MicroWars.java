@@ -118,7 +118,7 @@ public class MicroWars implements MiniGame {
         }
         victory=done();
         paint.repaint();
-        game.remove(paint);
+        game.dispose();
     }
     public int done(){
         boolean won=true;
