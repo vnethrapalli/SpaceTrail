@@ -373,7 +373,7 @@ class soldier{
     private int homex;
     private int homey;
     private int distance;
-    private boolean returntobase;
+    private boolean returntobase=false;
     public soldier(int x, int y,int team,int speed,int planetsize){
         this.x=x;
         this.y=y;
@@ -394,9 +394,11 @@ class soldier{
                 int rand = (int)(planets.length*random());
                 for (int i=0;i<planets.length;i++) {
                     Planet p=planets[i];
-                    if(p.team==TEAM&&p.strength<p.maxStrength){
+                    if(p.team==TEAM&&p.strength<p.maxStrength-5){
                         this.returntobase=true;
                         order(planets[(i+1)%planets.length].x,planets[(i+1)%planets.length].y);
+                        homex=p.x;
+                        homey=p.y;
                         break;
                     }
                 }
@@ -459,10 +461,11 @@ class soldier{
             int diff2=homey-y-MicroWars.soldiersize/2;
             if (distance+1<sqrt(pow(diff1,2)+pow(diff2,2))){
                 left=true;
-                if(returntobase){
-                    order(homex,homey);
-                }
+
             }
+        }
+        if(left&&returntobase){
+            order(homex,homey);
         }
     }
 }
