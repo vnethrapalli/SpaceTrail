@@ -1,5 +1,5 @@
 import Minigames.*;
-import Minigames.MicroWars.MicroWars;
+import Minigames.MicroWars;
 import Util.Character;
 import javax.swing.*;
 import java.awt.*;
@@ -152,7 +152,7 @@ public class NodLoder extends JPanel {
                 return false;
 
             }
-            else if (miniName.equals("MicroWars")){
+            else if (miniName.equals("Wars")){
                 MicroWars m =new MicroWars(10,500,400,3,2,3,4,3);
                 JFrame dumbGame = new JFrame();
                 dumbGame.setTitle("DumbGame");
@@ -163,7 +163,7 @@ public class NodLoder extends JPanel {
                 dumbGame.setLocationRelativeTo(null);
                 dumbGame.setVisible(true);
                 m.play();
-//                MicroWars m=new MicroWars(10,500,400,3,2,3,4,3);
+//                Wars m=new Wars(10,500,400,3,2,3,4,3);
 //                myFrame.removeAll();
 //                myFrame.validate();
 //                myFrame.repaint();
@@ -173,7 +173,7 @@ public class NodLoder extends JPanel {
 //
 //                m.play();
 //                m.winner();
-//                MicroWars m=new MicroWars(10,500,400,3,2,3,4,3);
+//                Wars m=new Wars(10,500,400,3,2,3,4,3);
 //                m.play();
 //                return m.winner();
             }

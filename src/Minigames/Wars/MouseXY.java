@@ -1,6 +1,7 @@
-package Minigames.MicroWars;
+package Minigames.Wars;
 
-import Minigames.MicroWars.MicroWars;
+
+import Minigames.MicroWars;
 
 import java.awt.*;
 import java.awt.event.*;
