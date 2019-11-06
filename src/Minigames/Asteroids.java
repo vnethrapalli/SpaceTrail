@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Asteroids extends JPanel{
+public class Asteroids extends JPanel {
 
     private final int PLAYERDIAMETER = 36;
     private final int MAXASTEROIDS = 160;
