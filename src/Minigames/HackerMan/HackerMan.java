@@ -116,7 +116,11 @@ public class HackerMan implements MiniGame {
         return false;
     }
     private Tile[] getConnectedRooms(Tile t){ //fix this
-        if(t.type==1||t.type==0){
+        if(t.type==1){
+            t.explored=true;
+            return null;
+        }
+        if(t.type==0){
             return null;
         }
 
@@ -127,6 +131,9 @@ public class HackerMan implements MiniGame {
             for (Tile returnTile:otherTileFace) {
                 if(returnTile.equals(t)){
                     paths.add(tile);
+                    if(tile.type==1){
+                        tile.explored=true;
+                    }
                 }
             }
         }
@@ -136,6 +143,28 @@ public class HackerMan implements MiniGame {
     }
     private Tile[] isfacing(Tile t){
         ArrayList<Tile> facing = new ArrayList<>();
+        if(t.type==1){
+            int x = 0;
+            int y = 0;
+            if(t.rotation==Tile.UP){
+               x=-1;
+               y=0;
+            }
+            if(t.rotation==Tile.RIGHT){
+                x=0;
+                y=-1;
+            }
+            if(t.rotation==Tile.DOWN){
+                x=1;
+                y=0;
+            }
+            if(t.rotation==Tile.LEFT){
+                x=0;
+                y=1;
+            }
+            Tile nexttile=tiles[t.x+x][t.y+y];
+            facing.add(nexttile);
+        }
         if(t.type==2){
             int badx=0;
             int bady=0;
