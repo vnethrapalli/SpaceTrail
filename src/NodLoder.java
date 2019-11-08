@@ -1,5 +1,5 @@
 import Minigames.*;
-import Minigames.MicroWars;
+import Minigames.Wars.MicroWars;
 import Util.Character;
 import javax.swing.*;
 import java.awt.*;
@@ -141,18 +141,19 @@ public class NodLoder extends JPanel {
     private boolean runMini(String miniName){
 
             if (miniName.equals("Asteroids")){
+                Asteroids a = new Asteroids();
                 JFrame asteroid = new JFrame();
                 asteroid.setTitle("Asteroids");
                 asteroid.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 asteroid.setResizable(false);
                 asteroid.setSize(2 * (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 3 , 4 * (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 5);
-                asteroid.add(new Asteroids());
+                asteroid.add(a);
                 asteroid.setLocationRelativeTo(null);
                 asteroid.setVisible(true);
                 return false;
 
             }
-            else if (miniName.equals("Wars")){
+            else if (miniName.equals("MicroWars")){
                 MicroWars m =new MicroWars(10,500,400,3,2,3,4,3);
                 JFrame dumbGame = new JFrame();
                 dumbGame.setTitle("DumbGame");
@@ -163,6 +164,22 @@ public class NodLoder extends JPanel {
                 dumbGame.setLocationRelativeTo(null);
                 dumbGame.setVisible(true);
                 m.play();
+//                while(!m.over){
+//
+//                }
+//                m.timer.stop();
+//                return m.winner();
+//                for(Component comp: dumbGame.getComponents()){
+//                    if(comp instanceof MicroWars){
+//                        m=(MicroWars)comp;
+//                        System.out.println("hi");
+//                    }
+//                    System.out.println("hi2");
+//                }
+//                if(m!=null) {
+//                    m.play();
+//                    m.winner();
+//                }
 //                Wars m=new Wars(10,500,400,3,2,3,4,3);
 //                myFrame.removeAll();
 //                myFrame.validate();

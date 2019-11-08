@@ -1,7 +1,12 @@
-package Minigames;
+package Minigames.Wars;
+
+import Minigames.MiniGame;
+import Minigames.Wars.MouseXY;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,7 +30,11 @@ public class MicroWars extends JPanel implements MiniGame {
     public final int Playerproduction;
     public HashMap<Integer,Color> color =new HashMap<>();
     private Color[] c = {Color.BLUE,Color.RED,Color.MAGENTA,Color.ORANGE};
+    public boolean over=false;
+    public Timer timer;
     public MicroWars(int numplanets,int maxwidth,int maxheight,int maxsize,int teams,int speed,int aiprod,int pprod) {
+        timer = new Timer(50,new GameTimer());
+        setFocusable(true);
         color.put(-1,Color.BLACK);
         for(int i=0;i<c.length;i++){
             color.put(i,c[i]);
@@ -35,9 +44,11 @@ public class MicroWars extends JPanel implements MiniGame {
         while(!makemap(numplanets,maxwidth,maxheight,maxsize,teams,speed)){
             numplanets--;
         }
+        addMouseListener(new MouseXY(this));
 
     }
     private boolean makemap(int numplanets,int maxwidth,int maxheight,int maxsize,int teams,int speed){
+
         int checking=0;
         this.speed=speed;
         Random rand = new Random();
@@ -94,6 +105,8 @@ public class MicroWars extends JPanel implements MiniGame {
         return victory==1;
     }
     public void play(){
+        System.out.println("hi");
+        timer.start();
 //        JFrame game = new JFrame();
 //        game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //        game.setTitle("game");
@@ -103,28 +116,28 @@ public class MicroWars extends JPanel implements MiniGame {
 //        game.setLocationRelativeTo(null);
 //        game.setVisible(true);
 //        paint.addMouseListener(new MouseXY(this));
-        int time=0;
-        while(done()==-1){
-            try {
-                Thread.sleep(50);
-            }catch (Exception e){
-                System.out.println("oops");
-            }
-            for (soldier s: troopslist){
-                s.update(troops,planets);
-            }
-            for (int i = 0; i <planets.length; i++) {
-                if(time%15==0) {
-                    planets[i].update(troops, troopslist, speed);
-                }
-            }
-            anhilate();
-            repaint();
-            time++;
-        }
-        victory=done();
-        repaint();
-//        game.remove(paint);
+//        int time=0;
+//        while(done()==-1){
+//            try {
+//                Thread.sleep(50);
+//            }catch (Exception e){
+//                System.out.println("oops");
+//            }
+//            for (soldier s: troopslist){
+//                s.update(troops,planets);
+//            }
+//            for (int i = 0; i <planets.length; i++) {
+//                if(time%15==0) {
+//                    planets[i].update(troops, troopslist, speed);
+//                }
+//            }
+//            anhilate();
+//            //repaint();
+//            time++;
+//        }
+//        victory=done();
+//        repaint();
+//      game.remove(paint);
     }
     public int done(){
         boolean won=true;
@@ -172,6 +185,7 @@ public class MicroWars extends JPanel implements MiniGame {
         selected.clear();
     }
     protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
         if ((victory == MicroWars.WIN || victory == MicroWars.LOSE)){
             if(victory==MicroWars.WIN){
                 g.drawString("You Win",getWidth()/2,getHeight()/2);
@@ -181,7 +195,6 @@ public class MicroWars extends JPanel implements MiniGame {
             }
 
         } else {
-            super.paintComponent(g);
             for (int i = 0; i < planets.length; i++) {
                 if (planets[i] == null) {
                     return;
@@ -265,8 +278,35 @@ public class MicroWars extends JPanel implements MiniGame {
         }
 
     }
+    private class GameTimer implements ActionListener {
+        private int time=0;
+        @Override
+        public void actionPerformed (ActionEvent e) {
+            //System.out.println("i got here");
+            if(done()==-1) {
+                for (soldier s : troopslist) {
+                    s.update(troops, planets);
+                }
+                for (int i = 0; i < planets.length; i++) {
+                    if (time % 15 == 0) {
+                        planets[i].update(troops, troopslist, speed);
+                    }
+                }
+                anhilate();
+                repaint();
+                time++;
+            }
+            else{
+                over=true;
+                victory=done();
+                repaint();
+                timer.stop();
+            }
+        }
+    }
 
 }
+
 
 class Planet{
     public int size;

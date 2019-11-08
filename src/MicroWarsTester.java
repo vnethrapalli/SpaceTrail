@@ -1,10 +1,10 @@
-import Minigames.MicroWars;
+import Minigames.Wars.MicroWars;
 
 import javax.swing.*;
 import java.awt.*;
 
 
-public class MicroWarsTester {
+public class MicroWarsTester{
     public static void main(String[] args) {
         MicroWars m =new MicroWars(10,500,400,3,2,3,4,3);
         JFrame dumbGame = new JFrame();
@@ -15,7 +15,6 @@ public class MicroWarsTester {
         dumbGame.add(m);
         dumbGame.setLocationRelativeTo(null);
         dumbGame.setVisible(true);
-        m.addMouseListener(new Minigames.Wars.MouseXY(m));
         m.play();
     }
 }
