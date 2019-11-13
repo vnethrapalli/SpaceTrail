@@ -20,6 +20,7 @@ public class NodLoder extends JPanel {
     private String[][] answers;
     private int index=0;
     private boolean win;
+    private boolean miniRun;
     private String nextnode;
     private JFrame myFrame;
 
@@ -63,15 +64,16 @@ public class NodLoder extends JPanel {
                 for(int i =0;i<rectList.size();i++) { //for loop in same format as paint component
                     if(rectList.get(i).contains(new Point(mouse_x,mouse_y))) {
                         index = i;
-                        win = runMini(answers[index][1]);
-                        if (win) {
-                            nextnode = answers[index][2];
-                            System.out.println("win");
-                        }
-                        if (!win) {
-                            nextnode = answers[index][3];
-                            System.out.println("ose");
-                        }
+                        if(!miniRun)
+                            runMini(answers[index][1]);
+//                        if (win) {
+//                            nextnode = answers[index][2];
+//                            System.out.println("win");
+//                        }
+//                        if (!win) {
+//                            nextnode = answers[index][3];
+//                            System.out.println("lose");
+//                        }
                     }
                 }
 
@@ -138,7 +140,7 @@ public class NodLoder extends JPanel {
         }
 
     }
-    private boolean runMini(String miniName){
+    private void runMini(String miniName){
 
             if (miniName.equals("Asteroids")){
                 Asteroids a = new Asteroids();
@@ -150,7 +152,8 @@ public class NodLoder extends JPanel {
                 asteroid.add(a);
                 asteroid.setLocationRelativeTo(null);
                 asteroid.setVisible(true);
-                return false;
+                a.play();
+
 
             }
             else if (miniName.equals("MicroWars")){
@@ -164,6 +167,7 @@ public class NodLoder extends JPanel {
                 dumbGame.setLocationRelativeTo(null);
                 dumbGame.setVisible(true);
                 m.play();
+
 //                while(!m.over){
 //
 //                }
@@ -196,10 +200,17 @@ public class NodLoder extends JPanel {
             }
             else if (miniName.equals("Shop")){
                 Shop s=new Shop(new Character(false,1));
-                return s.winner();
+
 
             }
-            return false;
+
+
+    }
+    public void winMini(boolean win){
+        if(win)
+        System.out.println(" w");
+        else
+            System.out.println("l");
 
     }
 
