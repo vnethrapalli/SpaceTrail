@@ -101,7 +101,10 @@ public class MicroWars extends JPanel implements MiniGame {
 
         return true;
     }
-    public boolean winner(){
+    public Boolean winner(){
+        if(victory==-1){
+            return null;
+        }
         return victory==1;
     }
     public void play(){

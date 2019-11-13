@@ -23,7 +23,7 @@ public class HackerMan extends JPanel implements MiniGame{
     public int width;
     public int height;
     private MazeGenerator mazegen;
-    private boolean victory =false;
+    private Boolean victory =null;
     public boolean over = false;
     public Timer timer;
     public HackerMan(int width, int height){
@@ -321,7 +321,8 @@ public class HackerMan extends JPanel implements MiniGame{
 //        }
 
     }
-    public boolean winner(){
+    public Boolean winner(){
+
         return victory;
     }
     protected void paintComponent(Graphics g) {
@@ -354,11 +355,12 @@ public class HackerMan extends JPanel implements MiniGame{
 
         public void actionPerformed (ActionEvent e) {
             //System.out.println("i got here");
-            if(time<10000&&(!victory)) {
+            if(time<10000&&(victory==null)) {
                 repaint();
                 time++;
             }
             else{
+                victory=false;
                 over=true;
                 repaint();
                 timer.stop();

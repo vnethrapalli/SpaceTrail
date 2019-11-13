@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Asteroids extends JPanel {
+public class Asteroids extends JPanel implements MiniGame{
 
     private final int PLAYERDIAMETER = 36;
     private final int MAXASTEROIDS = 160;
@@ -47,8 +47,7 @@ public class Asteroids extends JPanel {
         pos = new Timer(20, new AdjustPositionTimer());
         aster = new Timer(300, new NewAsteroidTimer());
         fade = new Timer(100, new FadeOutTimer());
-        pos.start();
-        aster.start();
+
 
         try {
             //create the font to use. Specify the size!
@@ -144,7 +143,16 @@ public class Asteroids extends JPanel {
 
 
     }
-
+    public Boolean winner(){
+        if(isAlive){
+            return null;
+        }
+        return winStatus;
+    }
+    public void play(){
+        pos.start();
+        aster.start();
+    }
     private class AdjustPositionTimer implements ActionListener {
         @Override
         public void actionPerformed (ActionEvent e) {
