@@ -199,7 +199,16 @@ public class NodLoder extends JPanel {
 //                return m.winner();
             }
             else if (miniName.equals("Shop")){
-                Shop s=new Shop(new Character(false,1));
+                Shop s = new Shop(new Character(true,1));
+                JFrame shop = new JFrame();
+                shop.setTitle("Asteroids");
+                shop.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                shop.setResizable(false);
+                shop.setSize(2 * (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 3 , 4 * (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 5);
+                shop.add(s);
+                shop.setLocationRelativeTo(null);
+                shop.setVisible(true);
+                s.play();
 
 
             }

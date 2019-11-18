@@ -13,25 +13,8 @@ import java.io.IOException;
 import Util.Sound;
 import Util.Character;
 
-public class Shop extends JPanel{
-    public Character charact;
 
-    public Shop(Character playerMan){
-        charact=playerMan;
-    }
-    public void play(){
-        JFrame shop = new JFrame();
-        shop.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        shop.setTitle("Shop!");
-        shop.add(new ShopPanel());
-        shop.setSize(2 * (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 3 , 4 * (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 5);
-        shop.setLocationRelativeTo(null);
-        shop.setResizable(false);
-        shop.setVisible(true);
-    }
-    public boolean winner(){return false;}
-}
-class ShopPanel extends JPanel {
+public class Shop extends JPanel implements MiniGame{
     public int[] supplies = {0,0,0,0,0,0}; //amount of supplies that will be bought
     private int mouse_x, mouse_y; //mouse positions x and y
     private Font font; //actual font
@@ -42,9 +25,10 @@ class ShopPanel extends JPanel {
     public int[] suppliesPrice = {2,3,100,5,4,2}; //price of all supplies
     public Sound music =new Sound(); //music player class
     public Timer animate=new Timer(0,new TimerListener()); //animater
+    private Boolean end;
 
 
-    public ShopPanel() {
+    public Shop(Character character) {
         //allows for tracking mouse location
         addMouseMotionListener(new MouseAdapter() {
                         @Override
@@ -110,9 +94,14 @@ class ShopPanel extends JPanel {
 
         //music and timer start. Timer for repainting
         music.playShopTheme();
-        animate.start();
-        }
 
+        }
+    public void play(){
+        animate.start();
+    }
+    public Boolean winner(){
+        return end;
+    }
     protected void paintComponent(Graphics g) {
         //background color and fill background
         g.setColor(new Color(242,198,102));
