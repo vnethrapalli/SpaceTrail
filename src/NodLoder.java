@@ -159,7 +159,7 @@ public class NodLoder extends JPanel {
             else if (miniName.equals("MicroWars")){
                 MicroWars m =new MicroWars(10,500,400,3,2,3,4,3);
                 JFrame dumbGame = new JFrame();
-                dumbGame.setTitle("DumbGame");
+                dumbGame.setTitle("Micro Wars");
                 dumbGame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 dumbGame.setResizable(false);
                 dumbGame.setSize(2 * (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 3 , 4 * (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 5);
@@ -201,7 +201,7 @@ public class NodLoder extends JPanel {
             else if (miniName.equals("Shop")){
                 Shop s = new Shop(new Character(true,1));
                 JFrame shop = new JFrame();
-                shop.setTitle("Asteroids");
+                shop.setTitle("Shop");
                 shop.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 shop.setResizable(false);
                 shop.setSize(2 * (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 3 , 4 * (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 5);
