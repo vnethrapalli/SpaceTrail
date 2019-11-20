@@ -24,13 +24,12 @@ public class NodLoder extends JPanel {
     private int index=0;
     private boolean win;
     private boolean miniRun;
-    private String nextnode;
     private JFrame myFrame;
 
     public NodLoder(String filename, JFrame frame) {
-        node=new Node(filename);
+        makeNode(filename);
         myFrame=frame;
-        answers=node.getAns();
+
         Font customFont=null;
         try {
             //create the font to use. Specify the size!
@@ -217,9 +216,17 @@ public class NodLoder extends JPanel {
         myFrame=null;
         java.lang.System.gc();
         if(win)
-        System.out.println(" w");
+            makeNode(answers[index][2]);
         else
-            System.out.println("l");
+            makeNode(answers[index][3]);
+
+    }
+    public void makeNode(String nodeStr){
+        node=new Node(nodeStr);
+        answers=node.getAns();
+        miniRun=false;
+        rectList.clear();
+        draw();
 
     }
 

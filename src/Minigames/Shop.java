@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import Util.Sound;
 import Util.Character;
+import testers_and_runners.NodLoder;
 
 
 public class Shop extends JPanel implements MiniGame{
@@ -25,11 +26,14 @@ public class Shop extends JPanel implements MiniGame{
     public int[] suppliesPrice = {2,3,100,5,4,2}; //price of all supplies
     public Sound music =new Sound(); //music player class
     public Timer animate=new Timer(0,new TimerListener()); //animater
+    public NodLoder nodel;
     private Boolean end;
 
 
-    public Shop(Character character) {
+    public Shop(Character character, NodLoder nl) {
+        nodel=nl;
         //allows for tracking mouse location
+
         addMouseMotionListener(new MouseAdapter() {
                         @Override
             public void mouseMoved(MouseEvent e) {
@@ -101,6 +105,11 @@ public class Shop extends JPanel implements MiniGame{
     }
     public Boolean winner(){
         return end;
+    }
+    public void end(){
+        music.stopShopTheme();
+        animate.stop();
+        nodel.winMini(end);
     }
     protected void paintComponent(Graphics g) {
         //background color and fill background
