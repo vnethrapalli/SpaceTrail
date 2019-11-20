@@ -1,5 +1,7 @@
 package Minigames;
 
+import testers_and_runners.NodLoder;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -11,7 +13,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
-
 public class Asteroids extends JPanel implements MiniGame{
 
     private final int PLAYERDIAMETER = 36;
@@ -22,7 +23,6 @@ public class Asteroids extends JPanel implements MiniGame{
 
     private Timer pos;
     private Timer aster;
-    private Timer fade;
 
     private boolean dirPressed[] = new boolean[4]; // up, down, left, right
     private boolean startValues = true;
@@ -35,9 +35,9 @@ public class Asteroids extends JPanel implements MiniGame{
 
     private Font customFont;
     private FontMetrics fm;
-
-    public Asteroids() {
-
+    private NodLoder nl;
+    public Asteroids(NodLoder n) {
+        nl=n;
         try {
             backdrop = ImageIO.read(new File("sprites/spaceBackdrop.png"));
         } catch (IOException ex) {
@@ -46,7 +46,6 @@ public class Asteroids extends JPanel implements MiniGame{
 
         pos = new Timer(20, new AdjustPositionTimer());
         aster = new Timer(300, new NewAsteroidTimer());
-        fade = new Timer(100, new FadeOutTimer());
 
 
         try {
@@ -139,9 +138,21 @@ public class Asteroids extends JPanel implements MiniGame{
             g.setColor(Color.yellow);
             g.setFont(customFont);
             g.drawString("you win!", (getWidth() - fm.stringWidth("you win!")) / 2, getHeight() / 2);
+            try {
+                Thread.sleep(2000);
+            }catch (Exception e){
+                System.out.println("sorry");
+            }
+
         }
 
 
+    }
+    public void end(){
+        pos.stop();
+        aster.stop();
+        asteroids.clear();
+        nl.winMini(winStatus);
     }
     public Boolean winner(){
         if(isAlive){
@@ -181,17 +192,16 @@ public class Asteroids extends JPanel implements MiniGame{
                         Math.pow(rock.rx + rock.size / 2 - (x + PLAYERDIAMETER / 2),2) + Math.pow(rock.ry + rock.size - (y + PLAYERDIAMETER / 2), 2) < PLAYERDIAMETER * PLAYERDIAMETER / 4) { //bottom center
 
                     isAlive = false;
-                    pos.stop();
-                    aster.stop();
-                    fade.start();
+                    end();
+
                     System.out.println("You lived " + (System.currentTimeMillis() - startTime) / 1000.0 + " seconds!");
                 }
 
-                else if ((System.currentTimeMillis() - startTime) / 1000.0 > 30.0) {
+                else if ((System.currentTimeMillis() - startTime) / 1000.0 > 5.0) {
                     winStatus = true;
-                    pos.stop();
-                    aster.stop();
-                    fade.start();
+                    end();
+
+
 
                 }
             }
@@ -213,18 +223,6 @@ public class Asteroids extends JPanel implements MiniGame{
                 if (!asteroids.get(i).isWithinBounds())
                     asteroids.set(i, new Rock());
             }
-        }
-    }
-
-    private class FadeOutTimer implements ActionListener {
-        @Override
-        public void actionPerformed (ActionEvent e) {
-            if (transparency < 255)
-                transparency += 5;
-
-            System.out.println(1);
-
-            repaint();
         }
     }
 

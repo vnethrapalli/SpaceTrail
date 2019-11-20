@@ -11,7 +11,7 @@ public class AsteroidsTester {
         asteroid.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         asteroid.setResizable(false);
         asteroid.setSize(2 * (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 3 , 4 * (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 5);
-        asteroid.add(new Asteroids());
+        asteroid.add(new Asteroids(null));
         asteroid.setLocationRelativeTo(null);
         asteroid.setVisible(true);
     }

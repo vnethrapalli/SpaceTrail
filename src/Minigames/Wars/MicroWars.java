@@ -2,6 +2,7 @@ package Minigames.Wars;
 
 import Minigames.MiniGame;
 import Minigames.Wars.MouseXY;
+import testers_and_runners.NodLoder;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,7 +33,9 @@ public class MicroWars extends JPanel implements MiniGame {
     private Color[] c = {Color.BLUE,Color.RED,Color.MAGENTA,Color.ORANGE};
     public boolean over=false;
     public Timer timer;
-    public MicroWars(int numplanets,int maxwidth,int maxheight,int maxsize,int teams,int speed,int aiprod,int pprod) {
+    public NodLoder nl;
+    public MicroWars(int numplanets, int maxwidth, int maxheight, int maxsize, int teams, int speed, int aiprod, int pprod, NodLoder n) {
+        nl=n;
         timer = new Timer(50,new GameTimer());
         setFocusable(true);
         color.put(-1,Color.BLACK);
@@ -100,6 +103,10 @@ public class MicroWars extends JPanel implements MiniGame {
         }
 
         return true;
+    }
+    public void end(){
+        nl.winMini(victory==1);
+        this.setVisible(false);
     }
     public Boolean winner(){
         if(victory==-1){
@@ -304,6 +311,7 @@ public class MicroWars extends JPanel implements MiniGame {
                 victory=done();
                 repaint();
                 timer.stop();
+                end();
             }
         }
     }

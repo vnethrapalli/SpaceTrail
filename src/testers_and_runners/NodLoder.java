@@ -1,3 +1,5 @@
+package testers_and_runners;
+
 import Minigames.*;
 import Minigames.Wars.MicroWars;
 import Util.Character;
@@ -8,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.IOException;
+import java.lang.management.GarbageCollectorMXBean;
 import java.util.ArrayList;
 
 public class NodLoder extends JPanel {
@@ -64,7 +67,7 @@ public class NodLoder extends JPanel {
                 for(int i =0;i<rectList.size();i++) { //for loop in same format as paint component
                     if(rectList.get(i).contains(new Point(mouse_x,mouse_y))) {
                         index = i;
-                        if(!miniRun)
+                        if(!miniRun) {
                             runMini(answers[index][1]);
 //                        if (win) {
 //                            nextnode = answers[index][2];
@@ -74,6 +77,7 @@ public class NodLoder extends JPanel {
 //                            nextnode = answers[index][3];
 //                            System.out.println("lose");
 //                        }
+                        }
                     }
                 }
 
@@ -143,37 +147,39 @@ public class NodLoder extends JPanel {
     private void runMini(String miniName){
 
             if (miniName.equals("Asteroids")){
-                Asteroids a = new Asteroids();
-                JFrame asteroid = new JFrame();
-                asteroid.setTitle("Asteroids");
-                asteroid.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                asteroid.setResizable(false);
-                asteroid.setSize(2 * (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 3 , 4 * (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 5);
-                asteroid.add(a);
-                asteroid.setLocationRelativeTo(null);
-                asteroid.setVisible(true);
+                Asteroids a = new Asteroids(this);
+                myFrame = new JFrame();
+                myFrame.setTitle("Asteroids");
+                myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                myFrame.setResizable(false);
+                myFrame.setSize(2 * (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 3 , 4 * (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 5);
+                myFrame.add(a);
+                myFrame.setLocationRelativeTo(null);
+                myFrame.setVisible(true);
                 a.play();
+                miniRun=true;
 
 
             }
             else if (miniName.equals("MicroWars")){
-                MicroWars m =new MicroWars(10,500,400,3,2,3,4,3);
-                JFrame dumbGame = new JFrame();
-                dumbGame.setTitle("Micro Wars");
-                dumbGame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                dumbGame.setResizable(false);
-                dumbGame.setSize(2 * (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 3 , 4 * (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 5);
-                dumbGame.add(m);
-                dumbGame.setLocationRelativeTo(null);
-                dumbGame.setVisible(true);
+                MicroWars m =new MicroWars(10,500,400,3,3,3,4,3,this);
+                myFrame = new JFrame();
+                myFrame.setTitle("DumbGame");
+                myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                myFrame.setResizable(false);
+                myFrame.setSize(2 * (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 3 , 4 * (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 5);
+                myFrame.add(m);
+                myFrame.setLocationRelativeTo(null);
+                myFrame.setVisible(true);
                 m.play();
+                miniRun=true;
 
 //                while(!m.over){
 //
 //                }
 //                m.timer.stop();
 //                return m.winner();
-//                for(Component comp: dumbGame.getComponents()){
+//                for(Component comp: myFrame.getComponents()){
 //                    if(comp instanceof MicroWars){
 //                        m=(MicroWars)comp;
 //                        System.out.println("hi");
@@ -199,16 +205,7 @@ public class NodLoder extends JPanel {
 //                return m.winner();
             }
             else if (miniName.equals("Shop")){
-                Shop s = new Shop(new Character(true,1));
-                JFrame shop = new JFrame();
-                shop.setTitle("Shop");
-                shop.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                shop.setResizable(false);
-                shop.setSize(2 * (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 3 , 4 * (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 5);
-                shop.add(s);
-                shop.setLocationRelativeTo(null);
-                shop.setVisible(true);
-                s.play();
+               // Shop s=new Shop(new Character(false,1));
 
 
             }
@@ -216,6 +213,9 @@ public class NodLoder extends JPanel {
 
     }
     public void winMini(boolean win){
+        myFrame.dispose();
+        myFrame=null;
+        java.lang.System.gc();
         if(win)
         System.out.println(" w");
         else
