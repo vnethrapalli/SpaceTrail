@@ -1,4 +1,4 @@
-Hello develop people, this is our project, we do not have a complete story so we made a custom thing just for you.
+Hello develop people, this is our project. We do not have a complete story so we made this custom thingie just for you.
 3
 Great!!_null_test.txt_test.txt
 Wow I'm special!!_null_test.txt_test.txt
