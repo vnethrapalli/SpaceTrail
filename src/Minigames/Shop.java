@@ -27,7 +27,6 @@ public class Shop extends JPanel implements MiniGame{
     public Sound music =new Sound(); //music player class
     public Timer animate=new Timer(0,new TimerListener()); //animater
     public NodLoder nodel;
-    private Boolean end;
 
 
     public Shop(Character character, NodLoder nl) {
@@ -69,6 +68,9 @@ public class Shop extends JPanel implements MiniGame{
                     }
 
                 }
+                if((mouse_x>=9*getWidth()/10&&mouse_x<=9*getWidth()/10+getWidth()/12)&&(mouse_y>=getHeight()/50&&mouse_y<=getHeight()/50+getHeight()/20)){
+                    end();
+                }
 
             }
         });
@@ -104,12 +106,12 @@ public class Shop extends JPanel implements MiniGame{
         animate.start();
     }
     public Boolean winner(){
-        return end;
+        return true;
     }
     public void end(){
         music.stopShopTheme();
         animate.stop();
-        nodel.winMini(end);
+        nodel.winMini(true);
     }
     protected void paintComponent(Graphics g) {
         //background color and fill background
@@ -122,7 +124,7 @@ public class Shop extends JPanel implements MiniGame{
         font=font.deriveFont(Font.BOLD,(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/15);
         fontMetric = getFontMetrics(font);
         g.setFont(font);
-        g.drawString("Minigames.Shop",0,fontMetric.getAscent());
+        g.drawString("Shop",0,fontMetric.getAscent());
 
         //Banner
         font=font.deriveFont(Font.PLAIN,(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/20);
@@ -141,6 +143,12 @@ public class Shop extends JPanel implements MiniGame{
         font=font.deriveFont(Font.PLAIN,(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/25);
         fontMetric = getFontMetrics(font);
         g.setFont(font);
+
+        g.setColor(new Color(230,94,9)); // button color
+        g.fillRect(9*getWidth()/10,getHeight()/50,getWidth()/12,getHeight()/20);
+
+        g.setColor(Color.BLACK);
+        g.drawString("Exit",91*getWidth()/100,getHeight()/50+fontMetric.getAscent()-getHeight()/100);
 
         for(int i =5;i<=15;i+=2) { // for is weird for spacing
             g.setColor(new Color(230,94,9)); // button color

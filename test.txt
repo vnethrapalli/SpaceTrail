@@ -1,6 +1,5 @@
-A militant force of squirrels bombardes your ship. They say you will join them or die. But then a light shown from above, and god came down and said let there be light. And everyone lived happily ever after. A bit more text idk
-2
-Pray for god(Prayer)_MicroWars_child1.txt_child12.txt
-Join the squirrels against god (Rebel)_Asteroids_child1.txt_child12.txt
-
-
+We have many exciting features in our project, which do you want to look at first?
+3
+Shop!!!!!_Shop_node2.txt_node2.txt
+The above option!!!!!_Shop_node2.txt_node2.txt
+I forgot to fix it so this option!!!!_null_node2.txt_node2.txt

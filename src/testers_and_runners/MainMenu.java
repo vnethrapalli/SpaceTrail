@@ -74,7 +74,7 @@ public class MainMenu extends JFrame {
 
                     if ((mouse_x >= 2 * getWidth() / 5 && mouse_x <= 3 * getWidth() / 5 ) && (mouse_y >= getHeight() / 2 && mouse_y <= 11 * getHeight() / 20)) {
                         JFrame Loder = new JFrame();
-                        NodLoder nod=new NodLoder("test.txt", Loder);
+                        NodLoder nod=new NodLoder("adven.txt", Loder);
                         Loder.setTitle("Nod");
                         Loder.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                         Loder.setResizable(false);

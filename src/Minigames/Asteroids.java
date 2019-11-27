@@ -197,7 +197,7 @@ public class Asteroids extends JPanel implements MiniGame{
                     System.out.println("You lived " + (System.currentTimeMillis() - startTime) / 1000.0 + " seconds!");
                 }
 
-                else if ((System.currentTimeMillis() - startTime) / 1000.0 > 5.0) {
+                else if ((System.currentTimeMillis() - startTime) / 1000.0 > 15.0) {
                     winStatus = true;
                     end();
 

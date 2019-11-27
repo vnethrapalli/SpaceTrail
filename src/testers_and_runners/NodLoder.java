@@ -10,7 +10,6 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.IOException;
-import java.lang.management.GarbageCollectorMXBean;
 import java.util.ArrayList;
 
 public class NodLoder extends JPanel {
@@ -105,7 +104,7 @@ public class NodLoder extends JPanel {
         for(int i=0;i<node.getText().length;i++){
 
 
-            if(i!=node.getText().length-1&&g.getFontMetrics().stringWidth(wide+" "+ node.getText()[i+1])>getWidth()){
+            if(i!=node.getText().length-1&&g.getFontMetrics().stringWidth(wide+" "+ node.getText()[i+1])>49*getWidth()/50){
                 g.drawString(wide,0,g.getFontMetrics().getAscent()+y_pos*getHeight()/20);
                 wide="";
                 y_pos+=2;
@@ -204,9 +203,22 @@ public class NodLoder extends JPanel {
 //                return m.winner();
             }
             else if (miniName.equals("Shop")){
-               // Shop s=new Shop(new Character(false,1));
+                Shop s =new Shop(new Character(true,1),this);
+                myFrame = new JFrame();
+                myFrame.setTitle("Shop");
+                myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                myFrame.setResizable(false);
+                myFrame.setSize(2 * (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 3 , 4 * (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 5);
+                myFrame.add(s);
+                myFrame.setLocationRelativeTo(null);
+                myFrame.setVisible(true);
+                s.play();
+                miniRun=true;
 
 
+            }
+            else{
+                makeNode((answers[index][2]));
             }
 
 
