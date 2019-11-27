@@ -9,36 +9,36 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Time;
 import java.util.Random;
 
 public class FishingPanel extends JPanel {
 
-    public static void main(String[] args) {
-        JFrame fishing = new JFrame();
-        fishing.setTitle("Fishing");
-        fishing.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        fishing.setResizable(false);
-        fishing.setSize(2 * (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 3 , 4 * (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 5);
-        fishing.add(new FishingPanel());
-        fishing.setLocationRelativeTo(null);
-        fishing.setVisible(true);
-    }
-
-    private Image backdrop;
+    private Image backdrop, fishingrod, reverseFishingrod;
     private final int BOBBERRADIUS = 20;
-    private int PLBASESTRENGTH = 6;
+    private int PLBASESTRENGTH = 8;
     private int bobberXShift, bobberYShift;
     private boolean dirPressed[] = new boolean[4]; // up, down, left, right
-    private Timer playerMove = new Timer(70, new PlayerMovementIntervalTimer());
+    private Timer playerMove = new Timer(80, new PlayerMovementIntervalTimer());
     private Random r = new Random();
 
-    private boolean isPlaying;
+    private boolean isPlaying, drawLeftFishingRod, drawRightFishingRod;
+
+
+    //each round stats
+    private double secondsOutOfBounds = 0;
+    private final double MARGINPROPORTION = 0.15;
+    private long gameStartTime, exitstartTime;
+    private boolean exited;
+
 
 
     public FishingPanel() {
 
         try {
             backdrop = ImageIO.read(new File("sprites/spaceBackdrop.png"));
+            fishingrod = ImageIO.read(new File("sprites/fishingrod.png"));
+            reverseFishingrod = ImageIO.read(new File("sprites/fishingrodreverse.png"));
         } catch (IOException ex) {
 
         }
@@ -83,12 +83,49 @@ public class FishingPanel extends JPanel {
         if (!isPlaying) {
             isPlaying = true;
             Fish fish = new Fish();
+            gameStartTime = System.currentTimeMillis();
         }
 
         g.setColor(Color.red);
         g.fillArc((getWidth() - BOBBERRADIUS) / 2 + bobberXShift,  (getHeight() - BOBBERRADIUS) / 2 + bobberYShift, BOBBERRADIUS, BOBBERRADIUS, 0, 360);
 
+        if (drawRightFishingRod)
+            g.drawImage(fishingrod, bobberXShift + 195, bobberYShift + 280, null, null);
+
+        if (drawLeftFishingRod)
+            g.drawImage(reverseFishingrod, bobberXShift + 110, bobberYShift + 280, null, null);
+
+        //update time
+        g.setColor(Color.yellow);
+        g.drawRect((int)(getWidth() * MARGINPROPORTION), (int)(getHeight() * MARGINPROPORTION), (int)((1 - 2 * MARGINPROPORTION) * getWidth()), (int)((1 - 2 * MARGINPROPORTION) * getHeight()));
+
+        //keep track of the time outofbounds
+        if (!exited && (bobberXShift + getWidth() / 2 < getWidth() * MARGINPROPORTION || bobberXShift  + getWidth() / 2 > (1 - MARGINPROPORTION) * getWidth()
+                || bobberYShift + getHeight() / 2 < getHeight() * MARGINPROPORTION || bobberYShift + getHeight() / 2 > (1 - MARGINPROPORTION) * getHeight())) {
+            exitstartTime = System.currentTimeMillis();
+            exited = true;
+        }
+
+        if (exited && exitstartTime != 0) {
+            if (bobberXShift + getWidth() / 2 > getWidth() * MARGINPROPORTION && bobberXShift  + getWidth() / 2 < (1 - MARGINPROPORTION) * getWidth()
+                    && bobberYShift + getHeight() / 2 > getHeight() * MARGINPROPORTION && bobberYShift + getHeight() / 2 < (1 - MARGINPROPORTION) * getHeight()) {
+                secondsOutOfBounds += (System.currentTimeMillis() - exitstartTime) / 1000.0;
+                exitstartTime = 0;
+                System.out.println(secondsOutOfBounds);
+                exited = false;
+            }
+        }
+
+        //win condition: gametime 30 seconds, and if its out of bounds for less than 6 seconds
+        if ((System.currentTimeMillis() - gameStartTime) / 1000.0 >= 30 && secondsOutOfBounds < 6.000) {
+            //some code
+            //draw the random fish sprite
+            //you win!!
+        }
+
+
     }
+
 
     private class PlayerMovementIntervalTimer implements ActionListener {
         @Override
@@ -128,6 +165,14 @@ public class FishingPanel extends JPanel {
                 bobberYShift += (int)Math.sqrt(str);
             }
 
+            if (bobberXShift > 0) {
+                drawRightFishingRod = true;
+                drawLeftFishingRod = false;
+            }
+            else {
+                drawLeftFishingRod = true;
+                drawRightFishingRod = false;
+            }
             repaint();
         }
 
@@ -138,8 +183,10 @@ public class FishingPanel extends JPanel {
         private int sizeOption; // 3 sizes: S, M, L
         private String type;
         private final String[] SPECIES = {}; // 3 sprites maybe, for different species
-        private int pullStrength;
-        private Timer switchDirection = new Timer(60, new MovementIntervalTimer());
+        private int pullStrength, dx, dy;
+
+        private Timer switchDirection = new Timer(1200, new MovementIntervalTimer());
+        private Timer moveFish = new Timer(40, new FishMovement());
 
         private Random r;
 
@@ -147,36 +194,34 @@ public class FishingPanel extends JPanel {
             r = new Random();
             sizeOption = r.nextInt(3); // correspond to size option
             //type = SPECIES[r.nextInt(SPECIES.length)];
-            pullStrength = r.nextInt(2) + 3;
-            System.out.println(pullStrength);
+            pullStrength = r.nextInt(6) + 6;
+
             switchDirection.start();
+            moveFish.start();
 
         }
 
         private class MovementIntervalTimer implements ActionListener {
             @Override
             public void actionPerformed (ActionEvent e) {
-                int dx = 0, dy = 0;
+                double angle = r.nextDouble() * Math.PI * 2;
+                dx = (int) (Math.cos(angle) * pullStrength);
+                dy = (int) (Math.sin(angle) * pullStrength);
 
-                if (bobberXShift <= 0)
-                    dx = (int) (Math.cos((Math.PI * r.nextDouble() + Math.PI / 2)) * pullStrength);
+            }
 
-                else
-                    dx = (int)(Math.cos((Math.PI * r.nextDouble() - Math.PI / 2 )) * pullStrength);
+        }
 
-                if (bobberYShift <= 0)
-                    dy = -(int) Math.sqrt(pullStrength * pullStrength - dx * dx);
-
-                else
-                    dy = (int) Math.sqrt(pullStrength * pullStrength - dx * dx);
-
-
-                bobberXShift += dx;
-                bobberYShift += dy;
+        private class FishMovement implements ActionListener {
+            @Override
+            public void actionPerformed (ActionEvent e) {
+                 bobberXShift += dx;
+                 bobberYShift += dy;
 
             }
 
         }
 
     }
+
 }
