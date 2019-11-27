@@ -1,4 +1,4 @@
-Despite how linear we made this, branching does in fact work. We use nodes to have each answer have a different outcome and different minigame. For example, lets play rock-paper-scissors-lizard-spock
+Despite how linear we made this, branching does in fact work. We use nodes to have each answer have a different outcome and different minigame. For example, let's play rock-paper-scissors-lizard-spock
 5
 I play rock_null_r.txt_r.txt
 I play paper_null_p.txt_r.txt
