@@ -104,7 +104,8 @@ public class NodLoder extends JPanel {
         for(int i=0;i<node.getText().length;i++){
 
 
-            if(i!=node.getText().length-1&&g.getFontMetrics().stringWidth(wide+" "+ node.getText()[i+1])>95*getWidth()/100){
+         /*   if(i!=node.getText().length-1&&g.getFontMetrics().stringWidth(wide+" "+ node.getText()[i+1])>95*getWidth()/100){
+
                 g.drawString(wide,0,g.getFontMetrics().getAscent()+y_pos*getHeight()/20);
                 wide="";
                 y_pos+=2;
@@ -113,9 +114,38 @@ public class NodLoder extends JPanel {
             wide+=" ";
             wide+=node.getText()[i];
         }
-        if(g.getFontMetrics().stringWidth(wide)<getWidth()){
+        if(!wide.equals(null)/*g.getFontMetrics().stringWidth(wide)<getWidth()){
             g.drawString(wide,0,g.getFontMetrics().getAscent()+y_pos*getHeight()/20);
         }
+*/
+            if(i!=node.getText().length-1){
+                if(g.getFontMetrics().stringWidth(wide+" "+ node.getText()[i])>95*getWidth()/100){
+                    g.drawString(wide,0,g.getFontMetrics().getAscent()+y_pos*getHeight()/20);
+                    wide="";
+                    y_pos+=2;
+
+                }
+                wide+=" ";
+                wide+=node.getText()[i];
+
+            }
+
+        }
+
+            if(g.getFontMetrics().stringWidth(wide+" "+ node.getText()[node.getText().length-1])>95*getWidth()/100){
+            g.drawString(wide,0,g.getFontMetrics().getAscent()+y_pos*getHeight()/20);
+            wide="";
+            y_pos+=2;
+        }
+
+        wide+=" ";
+        wide+=node.getText()[node.getText().length-1];
+
+        if(!wide.equals(null)/*g.getFontMetrics().stringWidth(wide)<getWidth()*/){
+            g.drawString(wide,0,g.getFontMetrics().getAscent()+y_pos*getHeight()/20);
+
+        }
+
         wide="";
 
         for(int i=0;i<answers.length;i++) {
@@ -138,7 +168,7 @@ public class NodLoder extends JPanel {
 
             j1.setForeground(Color.yellow);
 */
-//comment to push
+
         }
 
     }
