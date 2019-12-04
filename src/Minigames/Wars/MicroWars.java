@@ -105,6 +105,7 @@ public class MicroWars extends JPanel implements MiniGame {
         return true;
     }
     public void end(){
+        timer.stop();
         nl.winMini(victory==1);
         this.setVisible(false);
     }

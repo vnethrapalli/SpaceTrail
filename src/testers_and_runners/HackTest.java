@@ -7,7 +7,7 @@ import java.awt.*;
 public class HackTest {
     public static void main(String[] args) {
         JFrame dumbGame = new JFrame();
-        HackerMan m =new HackerMan(12,8, new NodLoder("test.txt",dumbGame));
+        HackerMan m =new HackerMan(9,6, new NodLoder("test.txt",dumbGame));
         dumbGame.setTitle("DumbGame");
         dumbGame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         dumbGame.setResizable(false);

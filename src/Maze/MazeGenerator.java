@@ -54,19 +54,24 @@ public class MazeGenerator {
 
         if ((start[0] != 0 && start[0] != MAZE.length) || (start[1] != 0 && start[1] != MAZE.length)) {
             int temp2 = rand.nextInt(2);
-            start[temp2] = rand.nextInt(2) * (MAZE.length - 1);
+            int mazelength= temp2==1?MAZE[0].length - 1:MAZE.length - 1;
+            start[temp2] = rand.nextInt(2) * (mazelength);
             //makes sure its a room instead of a wall
             start[1 - temp2] += (start[1 - temp2] % 2 == 0) ? 0 : 1;
         }
 
         if ((end[0] != 0 && end[0] != MAZE.length) || (end[1] != 0 && end[1] != MAZE.length)) {
             int temp2 = rand.nextInt(2);
-            end[temp2] = rand.nextInt(2) * (MAZE.length - 1);
+            int mazelength= temp2==1?MAZE.length - 1:MAZE[0].length - 1;
+            end[temp2] = rand.nextInt(2) * (mazelength);
             //makes sure its a room instead of a wall
             end[1 - temp2] += (end[1 - temp2] % 2 == 0) ? 0 : 1;
         }
-
-        MAZE[start[0]][start[1]] = ROOM;
+        try {
+            MAZE[start[0]][start[1]] = ROOM;
+        }catch(Exception e) {
+            System.out.println("dead");
+        }
         int roomx = start[0];
         int roomy = start[1];
         int temp;

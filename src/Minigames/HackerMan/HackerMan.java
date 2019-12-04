@@ -32,7 +32,7 @@ public class HackerMan extends JPanel implements MiniGame{
         timer= new Timer(25,new HackerManTimer());
         addMouseListener( new Mouselistener(this));
         tiles=new Tile[width][height];
-        MazeGenerator m = new MazeGenerator(width*2+1,height*2+1);
+        MazeGenerator m = new MazeGenerator(width*2-1,height*2-1);
         maze=m.getMAZE();
         transfer(m);
         mazegen=m;
@@ -53,17 +53,17 @@ public class HackerMan extends JPanel implements MiniGame{
                 if((i*2-1)>0&&maze[i*2-1][j*2]==0) {
                     numsideopen++;
                 }
-                if((j*2+1)<maze.length&&maze[i*2][j*2+1]==0) {
+                if((j*2+1)<maze[i*2].length&&maze[i*2][j*2+1]==0) {
                     numsideopen++;
                 }
                 if((j*2-1)>0&&maze[i*2][j*2-1]==0) {
                     numsideopen++;
                 }
                 if(numsideopen==2){
-                    if(((i*2-1)>0&&(i*2+1)<maze.length)&&maze[i*2+1][j*2]==0&&maze[i*2-1][j*2]==0) {
+                    if(((i*2-1)>0&&(i*2+1)<maze.length)&&maze[i*2+1][j*2]==0&&maze[i*2+1][j*2]==0) {
                         bent=true;
                     }
-                    if(((j*2-1)>0&&(j*2+1)<maze.length)&&maze[i*2][j*2+1]==0&&maze[i*2][j*2-1]==0) {
+                    if(((j*2-1)>0&&(j*2+1)<maze[i*2].length)&&maze[i*2][j*2-1]==0&&maze[i*2][j*2-1]==0) {
                         bent=true;
                     }
                 }
@@ -101,9 +101,14 @@ public class HackerMan extends JPanel implements MiniGame{
         }
     }
     private boolean isSolved(){
-        int startx= mazegen.getStart()[0]/2;
-        int starty=mazegen.getStart()[1]/2;
-        return isConnected(tiles[startx][starty]);
+        try {
+            int startx = mazegen.getStart()[0] / 2;
+            int starty = mazegen.getStart()[1] / 2;
+            return isConnected(tiles[startx][starty]);
+        }catch(Exception e) {
+            System.out.println("dead2");
+        }
+        return false;
     }
     private boolean isConnected(Tile t){
         if(t.explored){
@@ -340,7 +345,10 @@ public class HackerMan extends JPanel implements MiniGame{
                     v="v";
                 }
                 try {
-                    image = ImageIO.read(new File("Images/Maze"+tiles[i][j].type+v+".png"));
+                    int imagewidth = 2 * (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 27;
+                    int imageheight=4 * (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 30;
+                    ImageResizer.resize("Images/Maze"+tiles[i][j].type+v+".png","Images/Maze"+tiles[i][j].type+v+"resized.png",imagewidth,imageheight);
+                    image = ImageIO.read(new File("Images/Maze"+tiles[i][j].type+v+"resized.png"));
                 } catch (IOException e) {
                     System.out.println("no such file "+"Images/Maze"+tiles[i][j].type);
                 }
