@@ -1,0 +1,5 @@
+We're in
+3
+[ENTER]_null_wl.txt_wl.txt
+[I'VE DISABLED THE ALGORITHMS]_null_wl.txt_wl.txt
+[IF CRASH: DON'T]_null_wl.txt_wl.txt

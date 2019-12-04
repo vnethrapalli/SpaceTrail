@@ -7,8 +7,8 @@ public class LoderTester {
     public static void main(String[] args) {
 
         JFrame Loder = new JFrame();
-        NodLoder nod=new NodLoder("ast.txt", Loder);
-        Loder.setTitle("Nod");
+        NodLoder nod=new NodLoder("debug.txt", Loder);
+        Loder.setTitle("Test");
         Loder.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Loder.setResizable(false);
         Loder.pack();

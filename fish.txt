@@ -1,4 +1,4 @@
 Continuing we got the most important minigame of all, fishing. You ready to go catch some of them juicy fish?
 2
-YES_fishing_wl.txt_wl.txt
-no... leave me alone plz_null_wl.txt_wl.txt
+YES_fishing_hack.txt_hack.txt
+no... leave me alone plz_null_hack.txt_hack.txt

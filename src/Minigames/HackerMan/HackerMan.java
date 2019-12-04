@@ -28,6 +28,7 @@ public class HackerMan extends JPanel implements MiniGame{
     public boolean over = false;
     public Timer timer;
     public NodLoder nl;
+    private boolean resized=false;
     public HackerMan(int width, int height,NodLoder nodloder){
         timer= new Timer(25,new HackerManTimer());
         addMouseListener( new Mouselistener(this));
@@ -86,8 +87,10 @@ public class HackerMan extends JPanel implements MiniGame{
         }
     }
     public void rotate(int x,int y){
-        int x1 = (x)/100;
-        int y1=(y)/100;
+        int imagewidth =(2 * (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 27);
+        int imageheight=(4 * (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 30);
+        int x1 = (x)/imagewidth;
+        int y1=(y)/imageheight;
         System.out.println(x+","+y);
         System.out.println(x1+","+y1);
         tiles[x1][y1].rotate(1);
@@ -345,9 +348,12 @@ public class HackerMan extends JPanel implements MiniGame{
                     v="v";
                 }
                 try {
-                    int imagewidth = 2 * (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 27;
-                    int imageheight=4 * (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 30;
-                    ImageResizer.resize("Images/Maze"+tiles[i][j].type+v+".png","Images/Maze"+tiles[i][j].type+v+"resized.png",imagewidth,imageheight);
+                    if(!resized) {
+                        int imagewidth = (2 * (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 27);
+                        int imageheight = (4 * (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 30);
+                        ImageResizer.resize("Images/Maze" + tiles[i][j].type + v + ".png", "Images/Maze" + tiles[i][j].type + v + "resized.png", imagewidth, imageheight);
+                        resized=true;
+                    }
                     image = ImageIO.read(new File("Images/Maze"+tiles[i][j].type+v+"resized.png"));
                 } catch (IOException e) {
                     System.out.println("no such file "+"Images/Maze"+tiles[i][j].type);
@@ -359,7 +365,7 @@ public class HackerMan extends JPanel implements MiniGame{
                 AffineTransform tx = AffineTransform.getRotateInstance(rotationRequired, locationX, locationY);
                 AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
                 // Drawing the rotated image at the required drawing locations
-                g.drawImage(op.filter(image, null), i*100, j*100, null);
+                g.drawImage(op.filter(image, null), i*image.getWidth(), j*image.getHeight(), null);
 
             }
         }

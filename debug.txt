@@ -1,0 +1,7 @@
+debug
+5
+m_MicroWars_adven.txt_adven.txt
+f_fishing_adven.txt_adven.txt
+a_Asteroids_adven.txt_adven.txt
+s_Shop_adven.txt_adven.txt
+h_hack_adven.txt_adven.txt

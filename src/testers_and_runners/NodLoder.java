@@ -1,6 +1,7 @@
 package testers_and_runners;
 
 import Minigames.*;
+import Minigames.HackerMan.HackerMan;
 import Minigames.Wars.MicroWars;
 import Util.Character;
 import javax.swing.*;
@@ -258,6 +259,19 @@ public class NodLoder extends JPanel {
                 myFrame.setLocationRelativeTo(null);
                 myFrame.setVisible(true);
                 f.play();
+                miniRun=true;
+            }
+            else if (miniName.equals("hack")){
+                HackerMan h =new HackerMan(9,6,this);
+                myFrame = new JFrame();
+                myFrame.setTitle("Shop");
+                myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                myFrame.setResizable(false);
+                myFrame.setSize(2 * (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 3 , 4 * (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 5);
+                myFrame.add(h);
+                myFrame.setLocationRelativeTo(null);
+                myFrame.setVisible(true);
+                h.play();
                 miniRun=true;
             }
             else{
