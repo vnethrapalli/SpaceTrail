@@ -13,7 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
-public class Asteroids extends JPanel implements MiniGame{
+public class Asteroids extends JPanel implements MiniGame {
 
     private final int PLAYERDIAMETER = 36;
     private final int MAXASTEROIDS = 160;
@@ -36,8 +36,9 @@ public class Asteroids extends JPanel implements MiniGame{
     private Font customFont;
     private FontMetrics fm;
     private NodLoder nl;
+
     public Asteroids(NodLoder n) {
-        nl=n;
+        nl = n;
         try {
             backdrop = ImageIO.read(new File("sprites/spaceBackdrop.png"));
         } catch (IOException ex) {
@@ -52,10 +53,10 @@ public class Asteroids extends JPanel implements MiniGame{
             //create the font to use. Specify the size!
             //https://www.dafontfree.net/freefonts-matura-mt-script-capitals-f65093.htm
             //https://stackoverflow.com/questions/5652344/how-can-i-use-a-custom-font-in-java
-            customFont = Font.createFont(Font.TRUETYPE_FONT, new File("MATURASC.ttf")).deriveFont(Font.BOLD,(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/10);
+            customFont = Font.createFont(Font.TRUETYPE_FONT, new File("MATURASC.ttf")).deriveFont(Font.BOLD, (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 10);
         } catch (IOException e) {
             e.printStackTrace();
-        } catch(FontFormatException e) {
+        } catch (FontFormatException e) {
             e.printStackTrace();
         }
 
@@ -70,11 +71,9 @@ public class Asteroids extends JPanel implements MiniGame{
                     dirPressed[0] = true;
                 else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
                     dirPressed[1] = true;
-                }
-                else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+                } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
                     dirPressed[2] = true;
-                }
-                else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
                     dirPressed[3] = true;
                 }
 
@@ -121,8 +120,7 @@ public class Asteroids extends JPanel implements MiniGame{
                 if (i % 2 == 0) {
                     rock.rx += rock.speed;
                     rock.ry += rock.speed * rock.slope;
-                }
-                else {
+                } else {
                     rock.rx -= rock.speed;
                     rock.ry -= rock.speed * rock.slope;
                 }
@@ -140,7 +138,7 @@ public class Asteroids extends JPanel implements MiniGame{
             g.drawString("you win!", (getWidth() - fm.stringWidth("you win!")) / 2, getHeight() / 2);
             try {
                 Thread.sleep(2000);
-            }catch (Exception e){
+            } catch (Exception e) {
                 System.out.println("sorry");
             }
 
@@ -148,27 +146,31 @@ public class Asteroids extends JPanel implements MiniGame{
 
 
     }
-    public void end(){
+
+    public void end() {
         pos.stop();
         aster.stop();
         asteroids.clear();
         nl.winMini(winStatus);
     }
-    public Boolean winner(){
-        if(isAlive){
+
+    public Boolean winner() {
+        if (isAlive) {
             return null;
         }
         return winStatus;
     }
-    public void play(){
+
+    public void play() {
         pos.start();
         aster.start();
     }
+
     private class AdjustPositionTimer implements ActionListener {
         @Override
-        public void actionPerformed (ActionEvent e) {
+        public void actionPerformed(ActionEvent e) {
 
-            if(dirPressed[0] && y >= 0)
+            if (dirPressed[0] && y >= 0)
                 y -= 3;
 
             if (dirPressed[1] && y + PLAYERDIAMETER <= getHeight())
@@ -182,25 +184,22 @@ public class Asteroids extends JPanel implements MiniGame{
 
             for (int i = 0; i < asteroids.size(); i++) { // collision math
                 Rock rock = asteroids.get(i);
-                if (Math.pow(rock.rx - (x + PLAYERDIAMETER / 2),2) + Math.pow(rock.ry - (y + PLAYERDIAMETER / 2), 2) < PLAYERDIAMETER * PLAYERDIAMETER / 4 || // top left corner
-                        Math.pow(rock.rx + rock.size - (x + PLAYERDIAMETER / 2),2) + Math.pow(rock.ry - (y + PLAYERDIAMETER / 2), 2) < PLAYERDIAMETER * PLAYERDIAMETER / 4|| // top right corner
-                        Math.pow(rock.rx - (x + PLAYERDIAMETER / 2),2) + Math.pow(rock.ry + rock.size - (y + PLAYERDIAMETER / 2), 2) < PLAYERDIAMETER * PLAYERDIAMETER / 4 || // bottom left corner
-                        Math.pow(rock.rx + rock.size - (x + PLAYERDIAMETER / 2),2) + Math.pow(rock.ry + rock.size - (y + PLAYERDIAMETER / 2), 2) < PLAYERDIAMETER * PLAYERDIAMETER / 4 || // bottom right corner
-                        Math.pow(rock.rx + rock.size - (x + PLAYERDIAMETER / 2),2) + Math.pow(rock.ry + rock.size / 2 - (y + PLAYERDIAMETER), 2) < PLAYERDIAMETER * PLAYERDIAMETER / 4 || // right center
-                        Math.pow(rock.rx + rock.size / 2 - (x + PLAYERDIAMETER / 2),2) + Math.pow(rock.ry - (y + PLAYERDIAMETER / 2), 2) < PLAYERDIAMETER * PLAYERDIAMETER / 4|| // top center
-                        Math.pow(rock.rx - (x + PLAYERDIAMETER / 2),2) + Math.pow(rock.ry + rock.size / 2 - (y + PLAYERDIAMETER / 2), 2) < PLAYERDIAMETER * PLAYERDIAMETER / 4 || // left center
-                        Math.pow(rock.rx + rock.size / 2 - (x + PLAYERDIAMETER / 2),2) + Math.pow(rock.ry + rock.size - (y + PLAYERDIAMETER / 2), 2) < PLAYERDIAMETER * PLAYERDIAMETER / 4) { //bottom center
+                if (Math.pow(rock.rx - (x + PLAYERDIAMETER / 2), 2) + Math.pow(rock.ry - (y + PLAYERDIAMETER / 2), 2) < PLAYERDIAMETER * PLAYERDIAMETER / 4 || // top left corner
+                        Math.pow(rock.rx + rock.size - (x + PLAYERDIAMETER / 2), 2) + Math.pow(rock.ry - (y + PLAYERDIAMETER / 2), 2) < PLAYERDIAMETER * PLAYERDIAMETER / 4 || // top right corner
+                        Math.pow(rock.rx - (x + PLAYERDIAMETER / 2), 2) + Math.pow(rock.ry + rock.size - (y + PLAYERDIAMETER / 2), 2) < PLAYERDIAMETER * PLAYERDIAMETER / 4 || // bottom left corner
+                        Math.pow(rock.rx + rock.size - (x + PLAYERDIAMETER / 2), 2) + Math.pow(rock.ry + rock.size - (y + PLAYERDIAMETER / 2), 2) < PLAYERDIAMETER * PLAYERDIAMETER / 4 || // bottom right corner
+                        Math.pow(rock.rx + rock.size - (x + PLAYERDIAMETER / 2), 2) + Math.pow(rock.ry + rock.size / 2 - (y + PLAYERDIAMETER), 2) < PLAYERDIAMETER * PLAYERDIAMETER / 4 || // right center
+                        Math.pow(rock.rx + rock.size / 2 - (x + PLAYERDIAMETER / 2), 2) + Math.pow(rock.ry - (y + PLAYERDIAMETER / 2), 2) < PLAYERDIAMETER * PLAYERDIAMETER / 4 || // top center
+                        Math.pow(rock.rx - (x + PLAYERDIAMETER / 2), 2) + Math.pow(rock.ry + rock.size / 2 - (y + PLAYERDIAMETER / 2), 2) < PLAYERDIAMETER * PLAYERDIAMETER / 4 || // left center
+                        Math.pow(rock.rx + rock.size / 2 - (x + PLAYERDIAMETER / 2), 2) + Math.pow(rock.ry + rock.size - (y + PLAYERDIAMETER / 2), 2) < PLAYERDIAMETER * PLAYERDIAMETER / 4) { //bottom center
 
                     isAlive = false;
                     end();
 
                     System.out.println("You lived " + (System.currentTimeMillis() - startTime) / 1000.0 + " seconds!");
-                }
-
-                else if ((System.currentTimeMillis() - startTime) / 1000.0 > 15.0) {
+                } else if ((System.currentTimeMillis() - startTime) / 1000.0 > 15.0) {
                     winStatus = true;
                     end();
-
 
 
                 }
@@ -215,7 +214,7 @@ public class Asteroids extends JPanel implements MiniGame{
 
     private class NewAsteroidTimer implements ActionListener {
         @Override
-        public void actionPerformed (ActionEvent e) {
+        public void actionPerformed(ActionEvent e) {
             if (asteroids.size() < MAXASTEROIDS)
                 asteroids.add(new Rock());
 
@@ -237,7 +236,7 @@ public class Asteroids extends JPanel implements MiniGame{
         public Rock() {
             Random r = new Random();
             size = r.nextInt(30) + 15;
-            slope = (int)(5 * r.nextDouble() - 5 * r.nextDouble());
+            slope = (int) (5 * r.nextDouble() - 5 * r.nextDouble());
             speed = r.nextInt(3) + 2;
 
             int upDownLeftRight = r.nextInt(4);
@@ -245,43 +244,39 @@ public class Asteroids extends JPanel implements MiniGame{
             if (upDownLeftRight == 0) {
                 rx = r.nextInt(getWidth());
                 ry = r.nextInt(getHeight() / 10);
-            }
-            else if (upDownLeftRight == 1) {
+            } else if (upDownLeftRight == 1) {
                 rx = r.nextInt(getWidth());
                 ry = r.nextInt(getHeight() / 10) + 9 * getHeight() / 10;
-            }
-            else if (upDownLeftRight == 2) {
+            } else if (upDownLeftRight == 2) {
                 rx = r.nextInt(getWidth() / 10);
                 ry = r.nextInt(getHeight());
-            }
-            else if (upDownLeftRight == 3) {
+            } else if (upDownLeftRight == 3) {
                 rx = r.nextInt(getWidth() / 10) + 9 * getWidth() / 10;
                 ry = r.nextInt(getHeight());
             }
 
-            while(Math.abs(x - rx) < 50 || Math.abs(y - ry) < 50) {
-                if (upDownLeftRight == 0) {
-                    rx = r.nextInt(getWidth());
-                    ry = r.nextInt(getHeight() / 10);
+            while (Math.abs(x - rx) < 50 || Math.abs(y - ry) < 50) {
+                while (Math.abs(x - rx) < 50 || Math.abs(y - ry) < 50) {
+                    if (upDownLeftRight == 0) {
+                        rx = r.nextInt(getWidth());
+                        ry = r.nextInt(getHeight() / 10);
+                    } else if (upDownLeftRight == 1) {
+                        rx = r.nextInt(getWidth());
+                        ry = r.nextInt(getHeight() / 10) + 9 * getHeight() / 10;
+                    } else if (upDownLeftRight == 2) {
+                        rx = r.nextInt(getWidth() / 10);
+                        ry = r.nextInt(getHeight());
+                    } else if (upDownLeftRight == 3) {
+                        rx = r.nextInt(getWidth() / 10) + 9 * getWidth() / 10;
+                        ry = r.nextInt(getHeight());
+                    }
                 }
-                else if (upDownLeftRight == 1) {
-                    rx = r.nextInt(getWidth());
-                    ry = r.nextInt(getHeight() / 10) + 9 * getHeight() / 10;
-                }
-                else if (upDownLeftRight == 2) {
-                    rx = r.nextInt(getWidth() / 10);
-                    ry = r.nextInt(getHeight());
-                }
-                else if (upDownLeftRight == 3) {
-                    rx = r.nextInt(getWidth() / 10) + 9 * getWidth() / 10;
-                    ry = r.nextInt(getHeight());
-                }
-            }
 
+            }
         }
 
-        public boolean isWithinBounds() {
-            return rx >= 0 && rx <= getWidth() && ry >= 0 && ry <= getHeight();
+            public boolean isWithinBounds() {
+                return rx >= 0 && rx <= getWidth() && ry >= 0 && ry <= getHeight();
+            }
         }
     }
-}

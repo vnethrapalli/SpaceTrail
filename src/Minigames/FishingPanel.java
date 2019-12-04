@@ -9,10 +9,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
-import java.sql.Time;
 import java.util.Random;
 
-public class FishingPanel extends JPanel {
+public class FishingPanel extends JPanel implements MiniGame {
 
     private Image backdrop, fishingrod, reverseFishingrod;
     private final int BOBBERRADIUS = 20;
@@ -23,13 +22,16 @@ public class FishingPanel extends JPanel {
     private Random r = new Random();
 
     private boolean isPlaying, drawLeftFishingRod, drawRightFishingRod;
+    Fish fish;
 
 
     //each round stats
     private double secondsOutOfBounds = 0;
-    private final double MARGINPROPORTION = 0.15;
+    private final double MARGINPROPORTION = 0.25;
     private long gameStartTime, exitstartTime;
     private boolean exited;
+
+    private boolean win;
 
 
 
@@ -78,13 +80,30 @@ public class FishingPanel extends JPanel {
         playerMove.start();
     }
 
-    protected void paintComponent(Graphics g) {
-        g.drawImage(backdrop, 0, 0, null, null);
+    public void play() {
         if (!isPlaying) {
             isPlaying = true;
-            Fish fish = new Fish();
+            fish = new Fish();
             gameStartTime = System.currentTimeMillis();
         }
+    }
+
+    public Boolean winner() {
+        if (isPlaying)
+            return null;
+
+        return win;
+    }
+
+    public void end() {
+        playerMove.stop();
+        fish.stopTimers();
+        //nl.WinStatus(win);
+    }
+
+    protected void paintComponent(Graphics g) {
+        g.drawImage(backdrop, 0, 0, null, null);
+
 
         g.setColor(Color.red);
         g.fillArc((getWidth() - BOBBERRADIUS) / 2 + bobberXShift,  (getHeight() - BOBBERRADIUS) / 2 + bobberYShift, BOBBERRADIUS, BOBBERRADIUS, 0, 360);
@@ -117,10 +136,17 @@ public class FishingPanel extends JPanel {
         }
 
         //win condition: gametime 30 seconds, and if its out of bounds for less than 6 seconds
-        if ((System.currentTimeMillis() - gameStartTime) / 1000.0 >= 30 && secondsOutOfBounds < 6.000) {
+        if ((System.currentTimeMillis() - gameStartTime) / 1000.0 >= 30) {
             //some code
             //draw the random fish sprite
             //you win!!
+            if (secondsOutOfBounds < 5.000) {
+                win = true;
+            }
+            else {
+                win = false;
+                end();
+            }
         }
 
 
@@ -210,6 +236,11 @@ public class FishingPanel extends JPanel {
 
             }
 
+        }
+
+        public void stopTimers() {
+            switchDirection.stop();
+            moveFish.stop();
         }
 
         private class FishMovement implements ActionListener {
