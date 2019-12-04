@@ -247,6 +247,19 @@ public class NodLoder extends JPanel {
 
 
             }
+            else if (miniName.equals("fishing")){
+                FishingPanel f =new FishingPanel(this);
+                myFrame = new JFrame();
+                myFrame.setTitle("FIIIIIIIIIIIIIIIIIIIIIIIIIIISH");
+                myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                myFrame.setResizable(false);
+                myFrame.setSize(2 * (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 3 , 4 * (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 5);
+                myFrame.add(f);
+                myFrame.setLocationRelativeTo(null);
+                myFrame.setVisible(true);
+                f.play();
+                miniRun=true;
+            }
             else{
                 makeNode((answers[index][2]));
             }

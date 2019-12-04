@@ -1,5 +1,7 @@
 package Minigames;
 
+import testers_and_runners.NodLoder;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -24,7 +26,6 @@ public class FishingPanel extends JPanel implements MiniGame {
     private boolean isPlaying, drawLeftFishingRod, drawRightFishingRod;
     Fish fish;
 
-
     //each round stats
     private double secondsOutOfBounds = 0;
     private final double MARGINPROPORTION = 0.25;
@@ -32,10 +33,11 @@ public class FishingPanel extends JPanel implements MiniGame {
     private boolean exited;
 
     private boolean win;
+    private NodLoder nl;
 
 
-
-    public FishingPanel() {
+    public FishingPanel(NodLoder n) {
+        nl = n;
 
         try {
             backdrop = ImageIO.read(new File("sprites/spaceBackdrop.png"));
@@ -98,7 +100,7 @@ public class FishingPanel extends JPanel implements MiniGame {
     public void end() {
         playerMove.stop();
         fish.stopTimers();
-        //nl.WinStatus(win);
+        nl.winMini(win);
     }
 
     protected void paintComponent(Graphics g) {
@@ -126,6 +128,10 @@ public class FishingPanel extends JPanel implements MiniGame {
         }
 
         if (exited && exitstartTime != 0) {
+            if ((System.currentTimeMillis() - exitstartTime) / 1000 + secondsOutOfBounds >= 5.000) {
+                win = false;
+                end();
+            }
             if (bobberXShift + getWidth() / 2 > getWidth() * MARGINPROPORTION && bobberXShift  + getWidth() / 2 < (1 - MARGINPROPORTION) * getWidth()
                     && bobberYShift + getHeight() / 2 > getHeight() * MARGINPROPORTION && bobberYShift + getHeight() / 2 < (1 - MARGINPROPORTION) * getHeight()) {
                 secondsOutOfBounds += (System.currentTimeMillis() - exitstartTime) / 1000.0;
@@ -140,13 +146,10 @@ public class FishingPanel extends JPanel implements MiniGame {
             //some code
             //draw the random fish sprite
             //you win!!
-            if (secondsOutOfBounds < 5.000) {
-                win = true;
-            }
-            else {
-                win = false;
-                end();
-            }
+
+            win = true;
+            end();
+
         }
 
 
@@ -220,7 +223,7 @@ public class FishingPanel extends JPanel implements MiniGame {
             r = new Random();
             sizeOption = r.nextInt(3); // correspond to size option
             //type = SPECIES[r.nextInt(SPECIES.length)];
-            pullStrength = r.nextInt(6) + 6;
+            pullStrength = r.nextInt(6) + 5;
 
             switchDirection.start();
             moveFish.start();
